@@ -30,4 +30,3 @@ set interfaces xe-1/3/0 unit 100 family ccc
 set protocols l2circuit neighbor *.*.*.* interface xe-1/3/0.100 virtual-circuit-id ***
 set protocols l2circuit neighbor *.*.*.* interface xe-1/3/0.100 description "test_l2circuit"
 ```
-
