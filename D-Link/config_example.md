@@ -15,6 +15,10 @@ delete vlan vlanid ***                              ### VID
 delete vlan ***                                     ### Name
 ```
 
+**Ports**
+```html
+config ports 2 medium_type copper state enable
+```
 
 **System config**
 ```html
