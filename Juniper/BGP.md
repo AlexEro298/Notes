@@ -1,3 +1,16 @@
+**BGP best path**
+```html
+W - Weight (Juniper not)
+L - Local pref (больше лучше)
+L -
+A - AS-path (короче лучше)
+O - Origin
+M - MED (меньше лучше)
+N - Neighbor type (меньше лучше)
+I - IGP metric
+```
+**У Juniper под капотом preference = -1 - Locar pref. Example lp=105, preference =-106**
+
 **> show configuration protocols bgp**
 ```html
 group vpls {                                ### Loopback
