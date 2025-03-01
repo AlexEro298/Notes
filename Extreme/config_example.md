@@ -2,7 +2,7 @@
 ```html
 configure ports * display-string ***
 enable ports *
-disable ports 
+disable ports *
 ```
 
 **Vlan and L3vlan**
@@ -91,11 +91,11 @@ configure mpls rsvp-te lsp "TEST" add path "TEST-path" primary
 
 **VPLS, VPWS (L2VPN)**
 ```html
-delete l2vpn vpls Videocam                                              ### delete l2vpn
-create l2vpn vpls Videocam fec-id-type pseudo-wire *                    ### create l2vpn
-configure l2vpn vpls Videocam add service vlan cam
-configure l2vpn vpls Videocam mtu 1600
-configure l2vpn vpls Videocam add peer *.*.*.* core full-mesh
+delete l2vpn vpls *                                              ### delete l2vpn
+create l2vpn vpls * fec-id-type pseudo-wire *                    ### create l2vpn
+configure l2vpn vpls * add service vlan cam
+configure l2vpn vpls * mtu 1600
+configure l2vpn vpls * add peer *.*.*.* core full-mesh
 ```
 
 **Troubleshooting**

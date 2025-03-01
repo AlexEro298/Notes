@@ -1,12 +1,12 @@
 **BGP best path**
 ```html
-W - Weight (Juniper not)
-L - Local pref (больше лучше)
-L -
-A - AS-path (короче лучше)
-O - Origin
-M - MED (меньше лучше)
-N - Neighbor type (меньше лучше)
+W - Weight (Juniper not; Cisco-specific parameter)
+L - Local pref (more is better)
+L - Locally originated via a network or aggregate BGP subcommand or through redistribution from an IGP
+A - AS-path (shorter is better)
+O - Origin type (IGP is lower than Exterior Gateway Protocol (EGP), and EGP is lower than INCOMPLETE)
+M - MED (less is better)
+N - Neighbor type (less is better)
 I - IGP metric
 ```
 **У Juniper под капотом preference = -1 - Locar pref. Example lp=105, preference =-106**
@@ -20,7 +20,7 @@ group vpls {                                ### Loopback
         unicast;
     }
     family l2vpn {
-        signaling;
+        signaling;                          ### L2VPN services
     }
     neighbor *.*.*.*;
 }

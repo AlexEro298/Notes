@@ -61,4 +61,5 @@ example:
 ```html
 show running-config
 show transceiver
+show mac-address-table
 ```

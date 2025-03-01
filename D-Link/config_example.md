@@ -17,7 +17,8 @@ delete vlan ***                                     ### Name
 
 **Ports**
 ```html
-config ports 2 medium_type copper state enable
+config ports 2 medium_type copper state enable      ### Enable Port
+config ports 2 medium_type copper state disable     ### Disable Port
 ```
 
 **System config**
@@ -26,12 +27,12 @@ create account admin ***
 password:***
 again password:***
 config ipif System vlan default state enable ipaddress *.*.*.*/*
-create iproute default *.*.*.* 1
+create iproute default *.*.*.*
 enable snmp
 config snmp system_contact ***
 config snmp system_name *** 
 config snmp system_location ***
-config sntp primary *.*.*.* poll-interval 3600              ### poll-interval 30-99999 seconds 
+config sntp primary *.*.*.* secondary *.*.*.* poll-interval 3600              ### poll-interval 30-99999 seconds 
 enable jumbo_frame
 config ddm log enable
 enable ssh
@@ -43,5 +44,7 @@ disable/enable clipaging            ### scrolling config cli
 show config effective
 show vlan vlanid ***
 show vlan ports *
+show switch
+show iproute
 show fdb
 ```

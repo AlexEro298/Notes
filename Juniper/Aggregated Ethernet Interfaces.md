@@ -16,7 +16,7 @@ interfaces {
     encapsulation flexible-ethernet-services;
     aggregated-ether-options {
         minimum-links 1;
-        lacp {
+        lacp {                                      ### LACP LAG
             passive;
             periodic fast;
     }

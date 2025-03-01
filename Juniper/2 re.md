@@ -1,3 +1,4 @@
+
 **request chassis routing-engine master switch - switch current master to other RE  
 request routing-engine login other-routing-engine - login other RE  
 request system software add \*\*\*.tgz re1 reboot - update re1**

@@ -1,8 +1,7 @@
 **> show configuration interfaces ae0.300**
 ```html
 vlan-id 300;
-family inet {
-    mtu 1500;
+family inet {;
     address *.*.*.*/31;
 }
 family mpls;
@@ -11,7 +10,6 @@ family mpls;
 ```html
 vlan-id 301;
 family inet {
-    mtu 1500;
     address *.*.*.*/31;
 }
 family mpls;
@@ -25,6 +23,7 @@ area 0.0.0.0 {
         passive;
     }
     interface ae0.300 {
+        interface-type p2p
         bfd-liveness-detection {
             minimum-interval 300;
             multiplier 4;
@@ -32,6 +31,7 @@ area 0.0.0.0 {
         }
     }
     interface ae1.301 {
+        interface-type p2p
         bfd-liveness-detection {
             minimum-interval 300;
             multiplier 4;
@@ -44,9 +44,11 @@ area 0.0.0.0 {
 ```html
 set protocols ospf traffic-engineering
 set protocols ospf area 0.0.0.0 interface lo0.0 passive
+set protocols ospf area 0.0.0.0 interface ae0.300 interface-type p2p
 set protocols ospf area 0.0.0.0 interface ae0.300 bfd-liveness-detection minimum-interval 300
 set protocols ospf area 0.0.0.0 interface ae0.300 bfd-liveness-detection multiplier 4
 set protocols ospf area 0.0.0.0 interface ae0.300 bfd-liveness-detection full-neighbors-only
+set protocols ospf area 0.0.0.0 interface ae1.301 interface-type p2p
 set protocols ospf area 0.0.0.0 interface ae1.301 bfd-liveness-detection minimum-interval 300
 set protocols ospf area 0.0.0.0 interface ae1.301 bfd-liveness-detection multiplier 4
 set protocols ospf area 0.0.0.0 interface ae1.301 bfd-liveness-detection full-neighbors-only
