@@ -38,6 +38,20 @@ fastnetmon_api_client ban 192.168.1.1                                           
 fastnetmon_api_client get_banlist                                                                                       ### get ban list
 fastnetmon_api_client unban 178.216.152.1                                                                               ### unban <ip_address>
 ```
+## Firewall
+```html
+firewall-cmd --permanent --new-service=fastnetmon_netflow
+firewall-cmd --permanent --service=fastnetmon_netflow --add-port=2055/udp
+firewall-cmd --permanent --service=fastnetmon_netflow --set-short="Netflow collector fastnetmon service"
+firewall-cmd --permanent --add-service=fastnetmon-web
+firewall-cmd --permanent --add-service=fastnetmon_netflow
+firewall-cmd --reload
+```
+##
+```html
+clickhouse-client
+show databases
+```
 # Troubleshooting:
 ```html
 fastnetmon_client - monitor FastNetMon’s performance you can use client

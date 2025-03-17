@@ -43,7 +43,14 @@ dnf repoinfo <name_repo>                                                        
 
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute -y
 ```
+```html
+Proxy use, edit file: /etc/yum.conf
 
+proxy=http://SERVER:PORT
+proxy_username=USERNAME
+proxy_password=PASS
+proxy_auth_method=basic
+```
 # Example commands:
 ```html
 pwd                                                                                                                     ### current directory

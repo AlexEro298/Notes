@@ -28,8 +28,11 @@ firewall-cmd --permanent --service=<name_service> --set-description="Long Descri
 firewall-cmd --reload                                                                                                   ### Softly reread the rules
 firewall-cmd --complete-reload                                                                                          ### hard reread the rules and drop current connection
 firewall-cmd --runtime-to-permanent                                                                                     ### save current rules (current -> permanent)
-
-
+firewall-cmd --list-all-zones
+firewall-cmd --get-active-zones                                                                                         ### current active zone
+firewall-cmd --list-all --zone=public
+firewall-cmd --permanent --zone=public --add-port=80/tcp
+firewall-cmd --permanent --new-zone=<custom_zone>
 
 firewall-cmd --permanent --remove-port=80/tcp
 ```
