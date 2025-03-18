@@ -32,7 +32,7 @@ set policy-options prefix-list BGP-locals-v6-gr apply-path "protocols bgp group 
 set policy-options prefix-list BGP-neighbors-v4 apply-path "protocols bgp group <*> neighbor <*.*>"
 set policy-options prefix-list BGP-neighbors-v6 apply-path "protocols bgp group <*> neighbor <*:*>"
 set policy-options prefix-list MGMT-remote 10.10.0.0/16
-set policy-options prefix-list router-ipv6 apply-path "interfaces <*> unit <*> family inet6 address <*>"
+set policy-options prefix-list LOCALS-ipv6 apply-path "interfaces <*> unit <*> family inet6 address <*>"
 set policy-options prefix-list INTERNAL-locals <fxp0.0>/32
 set policy-options prefix-list INTERNAL-locals <lo0.0>/32
 set policy-options prefix-list MGMT-locals <lo0.0>/32
@@ -371,20 +371,20 @@ set firewall family inet6 filter accept-v6-common-services term protect-bgp filt
 ### filter accept-v6-traceroute
 ```html
 set firewall family inet6 filter accept-v6-traceroute apply-flags omit
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-prefix-list router-ipv6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from next-header udp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-port 33434-33450
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from hop-limit 1
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then policer management-1m
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then count accept-v6-traceroute-udp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then accept
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from destination-prefix-list router-ipv6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from next-header tcp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from hop-limit 1
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then policer management-1m
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then count accept-v6-traceroute-tcp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then accept
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from destination-prefix-list router-ipv6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from next-header icmp6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from icmp-type echo-reply
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from icmp-type echo-request
@@ -426,7 +426,7 @@ set firewall family inet6 filter accept-v6-ntp apply-flags omit
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from source-prefix-list NTP-servers-v6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from source-prefix-list localhost-v6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list localhost-v6
-set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list router-ipv6
+set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from next-header udp
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from port ntp
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp then policer management-512k
@@ -437,7 +437,7 @@ set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp then accept
 ```html
 set firewall family inet6 filter accept-v6-dns apply-flags omit
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from source-prefix-list DNS-servers-v6
-set firewall family inet6 filter accept-v6-dns term accept-v6-dns from destination-prefix-list router-ipv6
+set firewall family inet6 filter accept-v6-dns term accept-v6-dns from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from next-header udp
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from next-header tcp
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from source-port 53
@@ -472,7 +472,7 @@ set firewall family inet6 filter discard-v6-all term discard-v6-udp from next-he
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then count discard-v6-udp
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then log
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then discard
-set firewall family inet6 filter discard-v6-all term discard-v6-icmp from destination-prefix-list router-ipv6
+set firewall family inet6 filter discard-v6-all term discard-v6-icmp from destination-prefix-list LOCALS-ipv6
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp from next-header icmp6
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp then count discard-v6-icmp
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp then log

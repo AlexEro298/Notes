@@ -1,4 +1,10 @@
 # Config Juniper:
+## Group
+```html
+set groups sampling interfaces <*> unit <*> family inet sampling input
+set groups sampling interfaces <*> unit <*> family inet6 sampling input
+set groups sampling apply-flags omit
+```
 ## Netflow 9 example:
 ```html
 set groups sampling interfaces <*> unit <*> family inet sampling input
