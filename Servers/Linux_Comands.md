@@ -51,6 +51,13 @@ proxy_username=USERNAME
 proxy_password=PASS
 proxy_auth_method=basic
 ```
+# Change time format (AM;PM -> 00:00-24:00)
+```html
+nano /etc/locale.conf                                                                                                   ### add LC_TIME
+
+LANG=en_US.UTF-8
+LC_TIME=en_GB
+```
 # Example commands:
 ```html
 pwd                                                                                                                     ### current directory
@@ -68,4 +75,3 @@ cd                                                                              
 mv                                                                                                                      ### move file to *
 cp                                                                                                                      ### copy file *
 ```
-
