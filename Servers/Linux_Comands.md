@@ -41,7 +41,7 @@ dnf repoinfo <name_repo>                                                        
 
 
 
-dnf install mc net-tools htop nmap mtr bgpq4 traceroute -y
+dnf install mc net-tools htop nmap mtr bgpq4 traceroute git -y
 ```
 ```html
 Proxy use, edit file: /etc/yum.conf
