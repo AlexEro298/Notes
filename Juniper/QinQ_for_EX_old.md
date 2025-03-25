@@ -34,3 +34,37 @@ set interfaces ge-4/0/16 unit 0 family ethernet-switching port-mode access
 set interfaces ge-4/0/16 unit 0 family ethernet-switching vlan members <s_vlan_name>
 set ethernet-switching-options dot1q-tunneling ether-type 0x8100                                                        ### 0x8100 - 802.1Q
 ```
+
+```html
+user@host> show configuration vlans <vlan_qinq_name>                
+vlan-id 1031;
+interface {
+    ae1.0;
+}
+dot1q-tunneling {
+    customer-vlans [ 1-1444 1446-4094 ];
+}
+user@host> show configuration vlans <vlan_not_qinq_name>    
+vlan-id 1445;
+interface {
+    ae1.0 {
+        mapping {
+            1445 {
+                swap;
+            }
+        }
+    }
+}
+user@host> show configuration interfaces ae1
+mtu 9216;
+aggregated-ether-options {
+    minimum-links 1;
+    lacp {
+        active;
+        periodic fast;
+    }
+}
+unit 0 {
+    family ethernet-switching;
+}
+```
