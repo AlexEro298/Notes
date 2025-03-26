@@ -18,8 +18,35 @@
 ```html
 show version
 request system storage cleanup
-request system snapshot
-request system software validate /var/tmp/***-19.4R3.11.tgz
-request system software add /var/tmp/***-19.4R3.11.tgz
-request system reboot
+request vmhost snapshot
+```
+```html
+Copy junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz to juniper: /var/tmp/
+
+Windows:
+C:\Users\user>certutil -hashfile C:\Users\user\Desktop\junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz MD5
+Хэш MD5 C:\Users\alexero\Desktop\junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz:
+2529eb6f65c1320a833e751e3221f547
+CertUtil: -hashfile — команда успешно выполнена.
+
+Juniper:
+user@host> start shell user root 
+root@host:/var/home/remoteadmin # cd /var/tmp/
+root@host:/var/tmp # ls -la junos*
+
+-rw-r--r--  1 remoteadmin  wheel  3681691804 Mar 25 12:23 junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz
+
+root@host:/var/tmp # md5 junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz 
+
+MD5 (junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz) = 2529eb6f65c1320a833e751e3221f547
+
+root@host:/var/tmp # exit
+exit
+
+user@host.noyabrsk> 
+```
+```html
+request vmhost software validate /var/tmp/***-21.4R3-S5.4.tgz
+request vmhost software add /var/tmp/***-21.4R3-S5.4.tgz
+request vmhost reboot
 ```

@@ -12,7 +12,32 @@ nmtui
 nmcli networking off && nmcli networking on                                                                             ### restart Network Adapter
 systemctl restart NetworkManager
 ```
+# Debian 12 Network:
+```html
+nano /etc/network/interfaces
 
+source /etc/network/interfaces.d/*
+auto lo
+iface lo inet loopback
+allow-hotplug ens18
+iface ens18 inet static
+        address 10.10.13.80/24
+        gateway 10.10.13.245
+        # dns-* options are implemented by the resolvconf package, if installed
+        dns-nameservers 8.8.8.8
+        dns-search example.com
+
+
+systemctl restart networking.service
+```
+**OFF IPv6**
+```html
+nano /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+sysctl -p
+```
 # SSH:
 ```html
 mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys
@@ -74,4 +99,5 @@ touch                                                                           
 cd                                                                                                                      ### move to directory
 mv                                                                                                                      ### move file to *
 cp                                                                                                                      ### copy file *
+cat /etc/os-release
 ```
