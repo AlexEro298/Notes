@@ -3,7 +3,7 @@
 hostnamectl set-hostname *                                                                                              ### Name server
 adduser <username>                                                                                                      ### Add user in system
 passwd <username>                                                                                                       ### Change password user
-usermod –aG wheel <username>                                                                                            ### Add user to Admin Group
+    usermod –aG wheel <username>                                                                                            ### Add user to Admin Group
 ```
 
 # Centos 9 Network:
@@ -26,7 +26,7 @@ iface ens18 inet static
         # dns-* options are implemented by the resolvconf package, if installed
         dns-nameservers 8.8.8.8
         dns-search example.com
-
+        up ip route add 192.168.0.0/24 via 192.168.221.1 dev ens18                                                      ### example permanent static route
 
 systemctl restart networking.service
 ```
