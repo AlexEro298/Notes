@@ -8,37 +8,61 @@ set interfaces lo0 unit 0 family inet6 filter input-list discard-v6-all
 ```
 ## Prefix-List
 ```html
-set policy-options prefix-list router-ipv4 apply-path "interfaces <*> unit <*> family inet address <*>"
-set policy-options prefix-list router-ipv4-logical-systems apply-path "logical-systems <*> interfaces <*> unit <*> family inet address <*>"
-set policy-options prefix-list ospf 224.0.0.5/32
-set policy-options prefix-list ospf 224.0.0.6/32 
-set policy-options prefix-list MGMT-locals apply-path "interfaces fxp0 unit 0 family inet address <*>"
-set policy-options prefix-list vrrp 224.0.0.18/32
-set policy-options prefix-list multicast-all-routers 224.0.0.2/32
-set policy-options prefix-list RADIUS-servers apply-path "system radius-server <*>"
-set policy-options prefix-list TACPLUS-servers apply-path "system tacplus-server <*>"
-set policy-options prefix-list NTP-servers-v4 apply-path "system ntp server <*.*>"
-set policy-options prefix-list NTP-servers-v6 apply-path "system ntp server <*:*>"
-set policy-options prefix-list SNMP-clients apply-path "snmp client-list <*> <*>"
-set policy-options prefix-list SNMP-community-clients apply-path "snmp community <*> clients <*>"
-set policy-options prefix-list localhost-v4 127.0.0.0/8
-set policy-options prefix-list localhost-v6 ::1/128
-set policy-options prefix-list DNS-servers-v4 apply-path "system name-server <*.*>"
-set policy-options prefix-list DNS-servers-v6 apply-path "system name-server <*:*>"
+set policy-options prefix-list BGP-locals-v4 apply-flags omit
 set policy-options prefix-list BGP-locals-v4 apply-path "protocols bgp group <*> neighbor <*.*> local-address <*.*>"
+set policy-options prefix-list BGP-locals-v4-gr apply-flags omit
 set policy-options prefix-list BGP-locals-v4-gr apply-path "protocols bgp group <*> local-address <*.*>"
+set policy-options prefix-list BGP-locals-v6 apply-flags omit
 set policy-options prefix-list BGP-locals-v6 apply-path "protocols bgp group <*> neighbor <*:*> local-address <*:*>"
+set policy-options prefix-list BGP-locals-v6-gr apply-flags omit
 set policy-options prefix-list BGP-locals-v6-gr apply-path "protocols bgp group <*> local-address <*:*>"
+set policy-options prefix-list BGP-neighbors-v4 apply-flags omit
 set policy-options prefix-list BGP-neighbors-v4 apply-path "protocols bgp group <*> neighbor <*.*>"
+set policy-options prefix-list BGP-neighbors-v6 apply-flags omit
 set policy-options prefix-list BGP-neighbors-v6 apply-path "protocols bgp group <*> neighbor <*:*>"
+set policy-options prefix-list DNS-servers-v4 apply-flags omit
+set policy-options prefix-list DNS-servers-v4 apply-path "system name-server <*.*>"
+set policy-options prefix-list DNS-servers-v6 apply-flags omit
+set policy-options prefix-list DNS-servers-v6 apply-path "system name-server <*:*>"
+set policy-options prefix-list MGMT-locals apply-flags omit
+set policy-options prefix-list MGMT-locals apply-path "interfaces fxp0 unit 0 family inet address <*>"
+set policy-options prefix-list MGMT-remote apply-flags omit
 set policy-options prefix-list MGMT-remote 10.10.0.0/16
-set policy-options prefix-list LOCALS-v6 apply-path "interfaces <*> unit <*> family inet6 address <*>"
+set policy-options prefix-list NTP-servers-v4 apply-flags omit
+set policy-options prefix-list NTP-servers-v4 apply-path "system ntp server <*.*>"
+set policy-options prefix-list NTP-servers-v6 apply-flags omit
+set policy-options prefix-list NTP-servers-v6 apply-path "system ntp server <*:*>"
+set policy-options prefix-list RADIUS-servers apply-flags omit
+set policy-options prefix-list RADIUS-servers apply-path "system radius-server <*>"
+set policy-options prefix-list SNMP-clients apply-flags omit
+set policy-options prefix-list SNMP-clients apply-path "snmp client-list <*> <*>"
+set policy-options prefix-list SNMP-community-clients apply-flags omit
+set policy-options prefix-list SNMP-community-clients apply-path "snmp community <*> clients <*>"
+set policy-options prefix-list TACPLUS-servers apply-flags omit
+set policy-options prefix-list TACPLUS-servers apply-path "system tacplus-server <*>"
+set policy-options prefix-list localhost-v4 apply-flags omit
+set policy-options prefix-list localhost-v4 127.0.0.0/8
+set policy-options prefix-list localhost-v6 apply-flags omit
+set policy-options prefix-list localhost-v6 ::1/128
+set policy-options prefix-list multicast-all-routers apply-flags omit
+set policy-options prefix-list multicast-all-routers 224.0.0.2/32
+set policy-options prefix-list ospf apply-flags omit
+set policy-options prefix-list ospf 224.0.0.5/32
+set policy-options prefix-list ospf 224.0.0.6/32
+set policy-options prefix-list router-ipv4 apply-flags omit
+set policy-options prefix-list router-ipv4 apply-path "interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list router-ipv4-logical-systems apply-flags omit
+set policy-options prefix-list router-ipv4-logical-systems apply-path "logical-systems <*> interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list router-ipv6 apply-flags omit
+set policy-options prefix-list router-ipv6 apply-path "interfaces <*> unit <*> family inet6 address <*>"
+set policy-options prefix-list vrrp apply-flags omit
+set policy-options prefix-list vrrp 224.0.0.18/32
 
+set policy-options prefix-list INTERNAL-locals apply-flags omit
 set policy-options prefix-list INTERNAL-locals <fxp0.0>/32
 set policy-options prefix-list INTERNAL-locals <lo0.0>/32
+set policy-options prefix-list localhost-v4 <lo0.0>/32 
 set policy-options prefix-list MGMT-locals <lo0.0>/32
-set policy-options prefix-list localhost-v4 <lo0.0>/32
-set policy-options prefix-list loopback-prefix <lo0.0>/32
 ```
 ## Family inet
 ### filter accept-common-services**
@@ -260,22 +284,22 @@ set firewall family inet filter accept-vrrp term accept-vrrp then accept
 set firewall family inet filter accept-rsvp apply-flags omit
 set firewall family inet filter accept-rsvp term accept-rsvp from destination-prefix-list router-ipv4
 set firewall family inet filter accept-rsvp term accept-rsvp from destination-prefix-list router-ipv4-logical-systems
+set firewall family inet filter accept-rsvp term accept-rsvp from destination-prefix-list localhost-v4
 set firewall family inet filter accept-rsvp term accept-rsvp from protocol rsvp
 set firewall family inet filter accept-rsvp term accept-rsvp then count accept-rsvp
 set firewall family inet filter accept-rsvp term accept-rsvp then accept
 set firewall family inet filter accept-rsvp term accept-self-ping from destination-prefix-list router-ipv4
 set firewall family inet filter accept-rsvp term accept-self-ping from destination-prefix-list router-ipv4-logical-systems
+set firewall family inet filter accept-rsvp term accept-self-ping from destination-prefix-list localhost-v4
 set firewall family inet filter accept-rsvp term accept-self-ping from protocol udp
 set firewall family inet filter accept-rsvp term accept-self-ping from port 8503
 set firewall family inet filter accept-rsvp term accept-self-ping then accept
 set firewall family inet filter accept-rsvp term accept-mpls-echo from destination-prefix-list router-ipv4
 set firewall family inet filter accept-rsvp term accept-mpls-echo from destination-prefix-list router-ipv4-logical-systems
+set firewall family inet filter accept-rsvp term accept-mpls-echo from destination-prefix-list localhost-v4
 set firewall family inet filter accept-rsvp term accept-mpls-echo from protocol udp
 set firewall family inet filter accept-rsvp term accept-mpls-echo from port 3503
 set firewall family inet filter accept-rsvp term accept-mpls-echo then accept
-set firewall family inet filter accept-rsvp term accept-rsvp from destination-prefix-list localhost-v4
-set firewall family inet filter accept-rsvp term accept-self-ping from destination-prefix-list localhost-v4
-set firewall family inet filter accept-rsvp term accept-mpls-echo from destination-prefix-list localhost-v4
 ```
 ### filter accept-ldp
 ```html
@@ -327,9 +351,9 @@ set firewall family inet filter accept-ftp term accept-ftp from protocol tcp
 set firewall family inet filter accept-ftp term accept-ftp from port ftp
 set firewall family inet filter accept-ftp term accept-ftp from port ftp-data
 set firewall family inet filter accept-ftp term accept-ftp from port 49152-65534
-set firewall family inet filter accept-ftp term accept-ftp then policer management-5m
+set firewall family inet filter accept-ftp term accept-ftp then policer management-1g
 set firewall family inet filter accept-ftp term accept-ftp then count accept-ftp
-set firewall family inet filter accept-ftp term accept-ftp then count accept
+set firewall family inet filter accept-ftp term accept-ftp then accept
 ```
 ### filter discard-all
 ```html
@@ -372,20 +396,20 @@ set firewall family inet6 filter accept-v6-common-services term protect-bgp filt
 ### filter accept-v6-traceroute
 ```html
 set firewall family inet6 filter accept-v6-traceroute apply-flags omit
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-prefix-list router-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from next-header udp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from destination-port 33434-33450
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp from hop-limit 1
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then policer management-1m
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then count accept-v6-traceroute-udp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-udp then accept
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from destination-prefix-list router-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from next-header tcp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp from hop-limit 1
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then policer management-1m
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then count accept-v6-traceroute-tcp
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-tcp then accept
-set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from destination-prefix-list router-ipv6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from next-header icmp6
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from icmp-type echo-reply
 set firewall family inet6 filter accept-v6-traceroute term accept-v6-traceroute-icmp from icmp-type echo-request
@@ -427,7 +451,7 @@ set firewall family inet6 filter accept-v6-ntp apply-flags omit
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from source-prefix-list NTP-servers-v6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from source-prefix-list localhost-v6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list localhost-v6
-set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from destination-prefix-list router-ipv6
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from next-header udp
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp from port ntp
 set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp then policer management-512k
@@ -438,7 +462,7 @@ set firewall family inet6 filter accept-v6-ntp term accept-v6-ntp then accept
 ```html
 set firewall family inet6 filter accept-v6-dns apply-flags omit
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from source-prefix-list DNS-servers-v6
-set firewall family inet6 filter accept-v6-dns term accept-v6-dns from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter accept-v6-dns term accept-v6-dns from destination-prefix-list router-ipv6
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from next-header udp
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from next-header tcp
 set firewall family inet6 filter accept-v6-dns term accept-v6-dns from source-port 53
@@ -473,7 +497,7 @@ set firewall family inet6 filter discard-v6-all term discard-v6-udp from next-he
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then count discard-v6-udp
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then log
 set firewall family inet6 filter discard-v6-all term discard-v6-udp then discard
-set firewall family inet6 filter discard-v6-all term discard-v6-icmp from destination-prefix-list LOCALS-v6
+set firewall family inet6 filter discard-v6-all term discard-v6-icmp from destination-prefix-list router-ipv6
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp from next-header icmp6
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp then count discard-v6-icmp
 set firewall family inet6 filter discard-v6-all term discard-v6-icmp then log
@@ -484,6 +508,10 @@ set firewall family inet6 filter discard-v6-all term discard-v6-unknown then dis
 ```
 ## Policer
 ```html
+set firewall policer management-1g apply-flags omit
+set firewall policer management-1g if-exceeding bandwidth-limit 1g
+set firewall policer management-1g if-exceeding burst-size-limit 125m
+set firewall policer management-1g then discard
 set firewall policer management-1m apply-flags omit
 set firewall policer management-1m if-exceeding bandwidth-limit 1m
 set firewall policer management-1m if-exceeding burst-size-limit 625k
