@@ -47,10 +47,71 @@ firewall-cmd --permanent --add-service=fastnetmon-web
 firewall-cmd --permanent --add-service=fastnetmon_netflow
 firewall-cmd --reload
 ```
-##
+## Clickhouse
 ```html
 clickhouse-client
 show databases
+```
+## GoBGP
+```html
+nano /etc/fastnetmon.conf
+
+# GoBGP integration
+gobgp = on
+# Configuration for IPv4 announces
+gobgp_next_hop = 0.0.0.0
+gobgp_next_hop_host_ipv4 = 0.0.0.0
+gobgp_next_hop_subnet_ipv4 = 0.0.0.0
+gobgp_announce_host = on
+gobgp_announce_whole_subnet = off
+gobgp_community_host = 64512:666
+gobgp_community_subnet = 64512:777
+# Configuration for IPv6 announces
+gobgp_next_hop_ipv6 = 100::1
+gobgp_next_hop_host_ipv6 = 100::1
+gobgp_next_hop_subnet_ipv6 = 100::1
+gobgp_announce_host_ipv6 = on
+gobgp_announce_whole_subnet_ipv6 = off
+gobgp_community_host_ipv6 = 65001:666
+gobgp_community_subnet_ipv6 = 65001:777
+
+
+nano /etc/gobgpd.conf
+
+[global.config]
+  as = 64512
+  router-id = "192.168.1.134"
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "192.168.1.188"
+    peer-as = 65001
+    [neighbors.ebgp-multihop.config]
+      enabled = true
+    [[neighbors.afi-safis]]
+    [neighbors.afi-safis.config]
+      afi-safi-name = "ipv4-unicast"
+    [[neighbors.afi-safis]]
+    [neighbors.afi-safis.config]
+      afi-safi-name = "ipv6-unicast"
+    [neighbors.transport.config]
+      local-address = "192.168.1.134"
+
+
+sudo /opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgpd -f /etc/gobgpd.conf
+/opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgp nei 192.168.1.188
+
+Announce custom route:
+/opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgp global rib add 10.33.0.0/32 -a ipv4
+
+Withdraw route:
+/opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgp global rib del 10.33.0.0/32 -a ipv4
+```
+
+```html
+firewall-cmd --permanent --new-service=gobgp-fastnetmon
+firewall-cmd --permanent --service=gobgp-fastnetmon --add-port=179/tcp
+firewall-cmd --permanent --add-service=gobgp-fastnetmon
+firewall-cmd --permanent --service=gobgp-fastnetmon --set-short="FastNetMon GOBGP announce ban ip"
 ```
 # Troubleshooting:
 ```html
