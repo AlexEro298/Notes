@@ -105,6 +105,26 @@ Announce custom route:
 
 Withdraw route:
 /opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgp global rib del 10.33.0.0/32 -a ipv4
+
+
+
+cd /lib/systemd/system
+nano gobgp.service
+
+[Unit]
+Description=FastNetMon BGP daemon
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+ExecStart=/opt/fastnetmon-community/libraries/gobgp_3_12_0/gobgpd -f /etc/gobgpd.conf
+
+[Install]
+WantedBy=multi-user.target
+
+
+systemctl enable gobgp.service
+systemctl start gobgp.service
 ```
 
 ```html
