@@ -64,4 +64,5 @@ example:
 show running-config
 show transceiver
 show mac-address-table
+show run current-mode                                                                                                   ### display current edit config
 ```
