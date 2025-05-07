@@ -3,7 +3,7 @@
 hostnamectl set-hostname *                                                                                              ### Name server
 adduser <username>                                                                                                      ### Add user in system
 passwd <username>                                                                                                       ### Change password user
-    usermod –aG wheel <username>                                                                                            ### Add user to Admin Group
+usermod –aG wheel <username>                                                                                            ### Add user to Admin Group
 ```
 
 # Centos 9 Network:
@@ -44,7 +44,8 @@ mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys
 
 nano /etc/ssh/sshd_config
 PasswordAuthentication no
-
+    
+systemctl reload sshd.service
 
 If OS Ubuntu then again:
 /etc/ssh/sshd_config.d/50-cloud-init.conf
@@ -68,6 +69,7 @@ dnf repoinfo <name_repo>                                                        
 
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute git -y
 ```
+# Proxy
 ```html
 Proxy use, edit file: /etc/yum.conf
 
