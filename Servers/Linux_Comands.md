@@ -62,10 +62,12 @@ dnf update -y && dnf upgrade -y                                                 
 dnf search <tools_name>                                                                                                 ### Searching for packages in repositories
 dnf install <tools_name>                                                                                                ### installing packages from repositories
 dnf remove <tools_name>                                                                                                 ### Removing packages from system
+dnf repolist 
 dnf list installed                                                                                                      ### List install packet
 dnf repoinfo <name_repo>                                                                                                ### Info repo
 
-
+sudo dnf config-manager --set-enabled crb
+dnf install https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
 
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute git -y
 ```

@@ -19,7 +19,7 @@ To upgrade Zabbix agent 2 only, replace 'zabbix-*' with 'zabbix-agent2-*' in the
 ```html
 /etc/zabbix/zabbix_agentd.conf 
 Server=127.0.0.1,10.10.13.0/24                                                                                          ### example
-Hostname=***
+#Hostname=***
 
 firewall-cmd --permanent --new-service=zabbix
 firewall-cmd --permanent --service=zabbix --add-port=10050/tcp
