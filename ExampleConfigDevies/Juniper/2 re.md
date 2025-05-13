@@ -52,6 +52,8 @@ show version invoke-on other-routing-engine
 show version invoke-on all-routing-engines 
 show version invoke-on all-routing-engines | match "Hostname|boot"  
 
+
+
 GRES:
 request routing-engine login other-routing-engine
 show system switchover
