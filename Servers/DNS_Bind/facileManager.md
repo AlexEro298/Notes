@@ -2,16 +2,17 @@
 **https://github.com/WillyXJ/facileManager**
 
 ```html
-dnf install php mysql
+dnf install php mysql httpd -y
 
 php = 8.0.30-2.el9
 mysql = 8.0.41-2.el9
-
+httpd = 2.4.62-4.el9
 
 
 # cd /opt
 # wget http://facilemanager.com/download/facilemanager-complete-3.4.2.tar.gz
 # tar -zxvf facilemanager-complete-2.2.1.tar.gz
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 mysql_secure_installation
 mysql –u root –p
 CREATE DATABASE dns;
