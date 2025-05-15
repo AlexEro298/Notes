@@ -14,3 +14,16 @@ isc-bind-bind-utils, который содержит другие утилиты
 Чтобы запустить демон, выполните systemctl start isc-bind-named.
 Если вы хотите, чтобы демон запускался при загрузке, выполните systemctl enable isc-bind-named.
 ```
+
+# Bind9 dnf:
+
+```html
+dnf install bind bind-utils bind-devel bind-libs -y
+
+systemctl enable named
+systemctl start named
+systemctl status named
+
+firewall-cmd --permanent --add-service=dns
+firewall-cmd --permanent --reload
+```

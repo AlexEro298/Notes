@@ -3,9 +3,14 @@
 hostnamectl set-hostname *                                                                                              ### Name server
 adduser <username>                                                                                                      ### Add user in system
 passwd <username>                                                                                                       ### Change password user
-usermod –aG wheel <username>                                                                                            ### Add user to Admin Group
+usermod -aG wheel <username>                                                                                            ### Add user to Admin Group
 ```
+** Change minimum acceptable size for the new password**
+```html
+nano /etc/security/pwquality.conf
 
+minlen = 5
+```
 # Centos 9 Network:
 ```html
 nmtui
@@ -41,7 +46,11 @@ sysctl -p
 # SSH:
 ```html
 mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys
-
+    
+If other user add:
+cd /home/<user>/
+mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys && chown <user>:<user> .ssh/ && chmod 700 .ssh/ && chmod 644 authorized_keys 
+            
 nano /etc/ssh/sshd_config
 PasswordAuthentication no
     
