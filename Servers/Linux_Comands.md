@@ -1,23 +1,33 @@
-# Centos 9:
+# User add/remove:
+## Centos:
 ```html
 hostnamectl set-hostname *                                                                                              ### Name server
 adduser <username>                                                                                                      ### Add user in system
 passwd <username>                                                                                                       ### Change password user
 usermod -aG wheel <username>                                                                                            ### Add user to Admin Group
 ```
-** Change minimum acceptable size for the new password**
+## Ubuntu:
+```html
+useradd -m <username>
+passwd <username>
+```
+```html
+deluser --remove-all-files <username>
+```
+## Change minimum acceptable size for the new password
 ```html
 nano /etc/security/pwquality.conf
 
 minlen = 5
 ```
-# Centos 9 Network:
+# Network:
+## Centos:
 ```html
 nmtui
 nmcli networking off && nmcli networking on                                                                             ### restart Network Adapter
 systemctl restart NetworkManager
 ```
-# Debian 12 Network:
+## Debian 12:
 ```html
 nano /etc/network/interfaces
 
@@ -35,7 +45,7 @@ iface ens18 inet static
 
 systemctl restart networking.service
 ```
-**OFF IPv6**
+## OFF IPv6
 ```html
 nano /etc/sysctl.conf
 net.ipv6.conf.all.disable_ipv6 = 1
@@ -55,8 +65,9 @@ nano /etc/ssh/sshd_config
 PasswordAuthentication no
     
 systemctl reload sshd.service
-
+```
 If OS Ubuntu then again:
+```html
 /etc/ssh/sshd_config.d/50-cloud-init.conf
 PasswordAuthentication no
     
@@ -74,13 +85,15 @@ dnf remove <tools_name>                                                         
 dnf repolist 
 dnf list installed                                                                                                      ### List install packet
 dnf repoinfo <name_repo>                                                                                                ### Info repo
-
+```
+## Centos 9
+```html
 sudo dnf config-manager --set-enabled crb
 dnf install https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
 
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute git -y
 ```
-# Proxy
+### Proxy
 ```html
 Proxy use, edit file: /etc/yum.conf
 
