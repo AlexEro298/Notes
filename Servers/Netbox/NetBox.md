@@ -9,6 +9,7 @@ and /opt/netbox/.git will not exist.
 
 If it was installed from git, then /opt/netbox and /opt/netbox/.git will both exist as normal directories.
 2. Update netbox 4.2.6
+https://netboxlabs.com/docs/netbox/installation/upgrading/
 ```htmpl
 cd /opt/netbox/
 git fetch --tags
@@ -18,4 +19,9 @@ PYTHON=/usr/bin/python3.12 ./upgrade.sh
 3.
 ```html
 systemctl restart netbox netbox-rq
+```
+# Install the Python Package
+```html
+$ source /opt/netbox/venv/bin/activate
+(venv) $ pip install <package>
 ```

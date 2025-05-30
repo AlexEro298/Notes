@@ -28,11 +28,11 @@ sysctl -p
 ```
 ## SSH:
 ```html
-mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys
+mkdir -p .ssh && cd .ssh && echo "<your_public_key>" > authorized_keys
     
 If other user add:
-cd /home/<user>/
-mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys && chown <user>:<user> .ssh/ && chmod 700 .ssh/ && chmod 644 authorized_keys 
+cd /home/<user>/ && mkdir -p .ssh && cd .ssh && echo "<your_public_key>" > authorized_keys && chmod 644 authorized_keys &&
+        cd.. && chown <user>:<user> .ssh/ && chmod 700 .ssh/ 
             
 nano /etc/ssh/sshd_config
 PasswordAuthentication no
