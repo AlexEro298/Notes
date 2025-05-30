@@ -126,7 +126,6 @@ WantedBy=multi-user.target
 systemctl enable gobgp.service
 systemctl start gobgp.service
 ```
-
 ```html
 firewall-cmd --permanent --new-service=gobgp-fastnetmon
 firewall-cmd --permanent --service=gobgp-fastnetmon --add-port=179/tcp

@@ -64,7 +64,7 @@ Now enter the fmDNS Web-UI URL :  http://fmDNS server Ip/facileManager
 ```
 ## Client
 ```html
-dnf install php -y
+dnf install php php-curl -y
 
 cd /opt
 wget http://facilemanager.com/download/facilemanager-complete-5.3.2.tar.gz
@@ -74,7 +74,10 @@ php /usr/local/facileManager/fmDNS/client.php install
 
 http://<ip-fm-server>/facileManager
 ```
-
+## Server 2 secondary
+```html
+Install client and create /etc/named/zones/secondary and chown named:named secondary
+```
 # Troubleshooting:
 ```html
 
