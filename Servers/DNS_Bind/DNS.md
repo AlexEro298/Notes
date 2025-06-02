@@ -26,4 +26,8 @@ systemctl status named
 
 firewall-cmd --permanent --add-service=dns
 firewall-cmd --permanent --reload
+
+
+rndc retransfer example.com
+rndc zonestatus example.com
 ```
