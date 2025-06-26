@@ -116,3 +116,13 @@ gobgp global rib -a ipv4-flowspec del match destination 8.8.8.8/32 port 53
 ```html
 gobgp global rib -a ipv4-flowspec
 ```
+
+# Centos 9 Firewall
+```html
+firewall-cmd --permanent --new-service=gobgp-service
+firewall-cmd --permanent --service=gobgp-service  --add-port=179/tcp
+firewall-cmd --permanent --service=gobgp-service  --set-short="GoBGP Routing Daemon"
+firewall-cmd --permanent --service=gobgp-service  --set-description="GoBGP Routing Daemon"
+firewall-cmd --permanent --add-service=gobgp-service
+firewall-cmd --reload
+```
