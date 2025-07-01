@@ -54,7 +54,7 @@ dnf repoinfo <name_repo>                                                        
 sudo dnf config-manager --set-enabled crb
 dnf install https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
 
-dnf install mc net-tools htop nmap mtr bgpq4 traceroute git -y
+dnf install mc net-tools htop nmap mtr bgpq4 traceroute git lsb_release -y
 ```
 ### Proxy
 ```html
