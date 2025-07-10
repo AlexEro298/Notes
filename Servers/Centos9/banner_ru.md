@@ -1,6 +1,8 @@
 # Banner
 ```html
 nano /etc/profile.d/motd.sh
+
+/etc/motd.d/11-custom
 ```
 ```html
 #!/bin/sh
@@ -21,13 +23,13 @@ COLOR_ORANGE="\033[38;5;209m"
 get_time_greeting() {
     local hour=$(date +"%H")
     if [ $hour -lt 12 -a $hour -ge 4 ]; then
-        echo "Good morning!"
+        echo "Доброе утро!"
     elif [ $hour -lt 17 -a $hour -ge 12 ]; then
-        echo "Good afternoon!"
+        echo "Добрый день!"
     elif [ $hour -lt 23 -a $hour -ge 17 ]; then
-        echo "Good evening!"
+        echo "Добрый вечер!"
     else
-        echo "Good night!"
+        echo "Доброй ночи!"
     fi
 }
 
@@ -37,7 +39,7 @@ get_uptime() {
     local days=$((uptime_seconds/60/60/24))
     local hours=$((uptime_seconds/60/60%24))
     local minutes=$((uptime_seconds/60%60))
-    echo "$days days $hours hours $minutes minutes"
+    echo "$days дней $hours часов $minutes минут"
 }
 
 # Получить информацию о системе
@@ -60,21 +62,21 @@ get_system_info() {
     printf "%b %-80s %b%s%b\n" "$COLOR_LIGHT_GRAY" "$(get_time_greeting)" "$COLOR_ORANGE" "$(logname)" "$COLOR_RESET"
     printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
     
-    printf "%b * HOSTNAME           :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$(hostname -f)" "$COLOR_RESET"
-    printf "%b * IP-address         :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$ip_address" "$COLOR_RESET"
-    printf "%b * Version            :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$(lsb_release -s -d)" "$COLOR_RESET"
-    printf "%b * Core               : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(uname -a | awk '{print $1" "$3" "$12}')" "$COLOR_RESET"
-    printf "%b * Users              : Authorized users - %-30s%b\n" "$COLOR_LIGHT_GRAY" "$(users | wc -w)" "$COLOR_RESET"
-    printf "%b * Time on the server : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(date +"%A, %d %B %Y year., %T")" "$COLOR_RESET"
-    printf "%b * Loading the system : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$load_average / $process_count running processes" "$COLOR_RESET"
-    printf "%b * Memory, RAM        : Used: %-4s Mb / Total: %-4s Mb%b\n" "$COLOR_LIGHT_GRAY" "$memory_used" "$memory_total" "$COLOR_RESET"
-    printf "%b * SWAP               : Used: %-4s Mb / Total: %-4s Mb%b\n" "$COLOR_LIGHT_GRAY" "$swap_used" "$swap_total" "$COLOR_RESET"
-    printf "%b * After power on     : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(get_uptime)" "$COLOR_RESET"
+    printf "%b * Хост             :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$(hostname -f)" "$COLOR_RESET"
+    printf "%b * IP Адрес         :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$ip_address" "$COLOR_RESET"
+    printf "%b * Версия           :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$(lsb_release -s -d)" "$COLOR_RESET"
+    printf "%b * Ядро             : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(uname -a | awk '{print $1" "$3" "$12}')" "$COLOR_RESET"
+    printf "%b * Пользователи     : Авторизованных пользователей - %-30s%b\n" "$COLOR_LIGHT_GRAY" "$(users | wc -w)" "$COLOR_RESET"
+    printf "%b * Время на сервере : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(date +"%A, %d %B %Y г., %T")" "$COLOR_RESET"
+    printf "%b * Загрузка системы : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$load_average / $process_count запущенных процессов" "$COLOR_RESET"
+    printf "%b * Память, RAM      : Исп.: %-4s Мб / Всего: %-4s Мб%b\n" "$COLOR_LIGHT_GRAY" "$memory_used" "$memory_total" "$COLOR_RESET"
+    printf "%b * SWAP             : Исп.: %-4s Мб / Всего: %-4s Мб%b\n" "$COLOR_LIGHT_GRAY" "$swap_used" "$swap_total" "$COLOR_RESET"
+    printf "%b * После включения  : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(get_uptime)" "$COLOR_RESET"
     printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
-    printf "%b * Disks:%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_RESET"
+    printf "%b * Диски:%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_RESET"
     df -h | awk 'NR==1 || ($1 ~ /^\/dev\// && $6 !~ /^\/run|\/dev|\/sys|\/proc|\/snap/)' | sed "s/^/   /"
     printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
-    printf "%b * RAM:%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_RESET"
+    printf "%b * ОЗУ:%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_RESET"
     free -h
     printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
     printf "%b\n" "$COLOR_RESET"

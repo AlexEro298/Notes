@@ -65,7 +65,7 @@ WantedBy=multi-user.target
 systemctl enable gobgp
 systemctl start gobgp
 
-# Edit route
+# Edit route FlowSpec
 ```html
 Add a route
 $ gobgp global rib -a {ipv4-flowspec|ipv6-flowspec} add match <MATCH> then <THEN>
@@ -112,11 +112,54 @@ gobgp global rib -a ipv4-flowspec del match destination 8.8.8.8/32 port 53
 
 ```
 
-# Troubleshooting:
+# Example commands:
+## Global Configuration
 ```html
-gobgp global rib -a ipv4-flowspec
+gobgp global as <VALUE> router-id <VALUE> [listen-port <VALUE>] [listen-addresses <VALUE>...] [mpls-label-min <VALUE>] [mpls-label-max <VALUE>]
+gobgp global del all
+gobgp global
 ```
-
+## Operations for Global-Rib - add/del/show -
+```html
+gobgp global rib add <prefix> [-a <address family>]
+gobgp global rib del <prefix> [-a <address family>]
+gobgp global rib del all [-a <address family>]
+gobgp global rib [-a <address family>]
+gobgp global rib [<prefix>|<host>] [rd <rd>] [longer-prefixes|shorter-prefixes] [-a <address family>]
+gobgp global rib summary [-a <address family>]
+```
+example:
+```html
+gobgp global rib add 10.33.0.0/16 -a ipv4
+gobgp global rib del 10.33.0.0/16 -a ipv4
+```
+## Show Neighbor Status
+```html
+gobgp neighbor
+gobgp neighbor <neighbor address>
+```
+## Operations for neighbor - shutdown/reset/softreset/enable/disable -
+```html
+gobgp neighbor add { <neighbor address> | interface <ifname> } as <as number> [ local-as <as number> | vrf <vrf-name> | route-reflector-client [<cluster-id>] | route-server-client | allow-own-as <num> | remove-private-as (all|replace) | replace-peer-as | ebgp-multihop-ttl <ttl>]
+gobgp neighbor del { <neighbor address> | interface <ifname> }
+gobgp neighbor <neighbor address> softreset [-a <address family>]
+gobgp neighbor <neighbor address> softresetin [-a <address family>]
+gobgp neighbor <neighbor address> softresetout [-a <address family>]
+gobgp neighbor <neighbor address> enable
+gobgp neighbor <neighbor address> disable
+gobgp neighbor <neighbor address> reset
+```
+## Show Rib - local-rib/adj-rib-in/adj-rib-out -
+```html
+gobgp neighbor <neighbor address> [local|adj-in|adj-out] [-a <address family>]
+gobgp neighbor <neighbor address> [local|adj-in|adj-out] [<prefix>|<host>] [rd <rd>] [longer-prefixes|shorter-prefixes] [-a <address family>]
+gobgp neighbor <neighbor address> [local|adj-in|adj-out] summary [-a <address family>]
+gobgp neighbor <neighbor address> adj-in <prefix> validation
+```
+example:
+```html
+gobgp neighbor 10.0.0.1 local -a ipv4
+```
 # Centos 9 Firewall
 ```html
 firewall-cmd --permanent --new-service=gobgp-service
