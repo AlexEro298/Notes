@@ -107,7 +107,8 @@ $ gobgp global rib -a {ipv4-flowspec|ipv6-flowspec} del match <MATCH_EXPR>
 ```html
 gobgp global rib -a ipv4-flowspec
 
-gobgp global rib -a ipv4-flowspec add match source 178.216.156.43 destination 8.8.8.8/32 port 53 then discard
+gobgp global rib -a ipv4-flowspec add match source 178.216.156.43/32 destination 8.8.8.8/32 port 53 then discard
+gobgp global rib -a ipv4-flowspec add match source 178.216.156.44/32 destination 8.8.8.9/32 port 53 then rate-limit 1250000000 (до 1 ГигаБита в секунду)
 gobgp global rib -a ipv4-flowspec del match destination 8.8.8.8/32 port 53
 
 ```

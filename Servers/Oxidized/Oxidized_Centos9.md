@@ -70,8 +70,11 @@ EDIT FILE /etc/nginx/nginx.conf
 nginx -t
 systemctl enable nginx
 ```
+# Change model
+```html
+/usr/local/share/gems/gems/oxidized-0.34.0/lib/oxidized/model/
+```
 # Troubleshooting:
 ```html
 git ls-files
-
 ```

@@ -65,7 +65,7 @@ get_system_info() {
     printf "%b * Version            :%b %-50s%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_WHITE" "$(lsb_release -s -d)" "$COLOR_RESET"
     printf "%b * Core               : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(uname -a | awk '{print $1" "$3" "$12}')" "$COLOR_RESET"
     printf "%b * Users              : Authorized users - %-30s%b\n" "$COLOR_LIGHT_GRAY" "$(users | wc -w)" "$COLOR_RESET"
-    printf "%b * Time on the server : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(date +"%A, %d %B %Y year., %T")" "$COLOR_RESET"
+    printf "%b * Time on the server : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$(date +"%A, %d %B %Y year, %T")" "$COLOR_RESET"
     printf "%b * Loading the system : %-50s%b\n" "$COLOR_LIGHT_GRAY" "$load_average / $process_count running processes" "$COLOR_RESET"
     printf "%b * Memory, RAM        : Used: %-4s Mb / Total: %-4s Mb%b\n" "$COLOR_LIGHT_GRAY" "$memory_used" "$memory_total" "$COLOR_RESET"
     printf "%b * SWAP               : Used: %-4s Mb / Total: %-4s Mb%b\n" "$COLOR_LIGHT_GRAY" "$swap_used" "$swap_total" "$COLOR_RESET"
