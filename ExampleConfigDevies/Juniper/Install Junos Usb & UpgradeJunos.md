@@ -46,7 +46,7 @@ exit
 user@host.noyabrsk> 
 ```
 ```html
-request vmhost software validate /var/tmp/***-21.4R3-S5.4.tgz
+request vmhost software no-validate /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost software add /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost reboot
 ```

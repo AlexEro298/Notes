@@ -78,6 +78,10 @@ get_system_info() {
     free -h
     printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
     printf "%b\n" "$COLOR_RESET"
+    printf "%b * IP route:%b\n" "$COLOR_LIGHT_GRAY" "$COLOR_RESET"
+    ip route show
+    printf "%b\n" "$COLOR_DARK_GRAY================================================================================$COLOR_RESET"
+    printf "%b\n" "$COLOR_RESET"
     fi
 }
 
