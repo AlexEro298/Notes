@@ -53,3 +53,5 @@ request vmhost reboot
 # Dual RE
 ![file_cp_re1.png](pictures/file_cp_re1.png)
 ![disable_GRES_NSR_NSB.png](pictures/disable_GRES_NSR_NSB.png)
+request vmhost software add /var/tmp/... no-validate re1 reboot | no-more
+![master_switch.png](pictures/master_switch.png)
