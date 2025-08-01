@@ -51,4 +51,5 @@ request vmhost software add /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost reboot
 ```
 # Dual RE
-![img.png](img.png)
+![file_cp_re1.png](pictures/file_cp_re1.png)
+![disable_GRES_NSR_NSB.png](pictures/disable_GRES_NSR_NSB.png)
