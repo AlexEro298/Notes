@@ -51,12 +51,12 @@ request vmhost software add /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost reboot
 ```
 # Dual RE
-![manual.png](pictures/manual.png)
-![file_cp_re1.png](pictures/file_cp_re1.png)
-![disable_GRES_NSR_NSB.png](pictures/disable_GRES_NSR_NSB.png)
+![Manual Upgrade DUAL RE](pictures/manual.png)
+![Copy JunOS packet RE0 to RE1](pictures/file_cp_re1.png)
+![Disable GRES/NSB/NSR](pictures/disable_GRES_NSR_NSB.png)
 request vmhost software add /var/tmp/... no-validate re1 reboot | no-more
-![master_switch.png](pictures/master_switch.png)
+![Switchover RE](pictures/master_switch.png)
 request vmhost software add /var/tmp/... no-validate re0 reboot | no-more
 ```Enable GRES``` 
 ```and switch master RE```
-![rm_files.png](pictures/rm_files.png)
+![Delete old JunOS packet](pictures/rm_files.png)
