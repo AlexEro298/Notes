@@ -54,9 +54,33 @@ request vmhost reboot
 ![Manual Upgrade DUAL RE](pictures/manual.png)
 ![Copy JunOS packet RE0 to RE1](pictures/file_cp_re1.png)
 ![Disable GRES/NSB/NSR](pictures/disable_GRES_NSR_NSB.png)
+```html
+request routing-engine login re1 - re1 backup RE
+show chassis hardware - not show the output to backup RE
 request vmhost software add /var/tmp/... no-validate re1 reboot | no-more
+```
 ![Switchover RE](pictures/master_switch.png)
+```html
 request vmhost software add /var/tmp/... no-validate re0 reboot | no-more
-```Enable GRES``` 
-```and switch master RE```
+```
+```html
+Enable GRES
+```
+```html
+> show task replication    
+        Stateful Replication: Enabled
+        RE mode: Master
+
+    Protocol                Synchronization Status
+    OSPF                    Complete              
+    BGP                     Complete              
+    MPLS                    Complete              
+    RSVP                    Complete              
+    LDP                     Complete      
+
+>request chassis routing-engine master switch check no-confirm
+```
+```html
+>request chassis routing-engine master switch no-confirm
+```
 ![Delete old JunOS packet](pictures/rm_files.png)
