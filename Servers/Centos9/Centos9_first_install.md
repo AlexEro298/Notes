@@ -41,8 +41,11 @@ systemctl reload sshd.service
 ```
 ## dnf - packet manager
 ```html
-dnf update -y && dnf upgrade -y                                                                                         ### Update Repo and Upgrade system
+dnf upgrade -y                                                                                                          ### Update Repo and Upgrade system
 
+dnf makecache
+dnf check-upgrade
+dnf upgrade <package_name>
 dnf search <tools_name>                                                                                                 ### Searching for packages in repositories
 dnf install <tools_name>                                                                                                ### installing packages from repositories
 dnf remove <tools_name>                                                                                                 ### Removing packages from system
