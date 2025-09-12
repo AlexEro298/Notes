@@ -17,6 +17,8 @@ nano /etc/ntpsec/ntp.conf
 comment #pool 0.debian.pool.ntp.org iburst
 uncomment #statsdir /var/log/ntpsec/
 server ntp.msk-ix.ru iburst
+server ntp1.niiftri.irkutsk.ru iburst
+server ntp2.niiftri.irkutsk.ru iburst
 server 0.ru.pool.ntp.org iburst
 server 1.ru.pool.ntp.org iburst
 server 2.ru.pool.ntp.org iburst
