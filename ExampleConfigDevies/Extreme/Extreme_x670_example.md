@@ -13,7 +13,7 @@ configure vlan <vlan_name> add ports <port_number> tagged
 configure vlan <vlan_name> add ports <port_number> untagged
 configure vlan <vlan_name> delete ports <port_number>
 configure vlan <vlan_name> delete                                                                                       ### delete vlan
-
+delete vlan <vlan_name>
 
 ###L3 vlan
 configure vlan <vlan_name> ipaddress <ip_address> <mask>                                                                ### example: 10.10.1.1 255.255.255.0
