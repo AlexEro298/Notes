@@ -3,7 +3,7 @@
 ```html
 nano /etc/locale.conf                                                                                                   ### add LC_TIME
 
-LANG=en_US.UTF-8
+LANG="en_US.UTF-8"
 LC_TIME=en_GB
 ```
 
