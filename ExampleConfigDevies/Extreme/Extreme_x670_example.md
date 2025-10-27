@@ -15,7 +15,7 @@ configure vlan <vlan_name> delete ports <port_number>
 configure vlan <vlan_name> delete                                                                                       ### delete vlan
 delete vlan <vlan_name>
 
-###L3 vlan
+
 configure vlan <vlan_name> ipaddress <ip_address> <mask>                                                                ### example: 10.10.1.1 255.255.255.0
 enable ipforwarding vlan <vlan_name>
 configure ip-mtu <vlan_mtu> vlan <vlan_name>                                                                            ### mtu: 1600 - for ospf vlan
@@ -53,7 +53,18 @@ configure snmp sysName "<SysName>"
 configure snmp sysLocation "<SysLocation>"
 configure snmp sysContact "<SysContact>"
 configure timezone <minutes> autodst                                                                                    ### minutes example: configure timezone 300 autodst (+5 GMT)
+
+configure snmp delete community readonly public
+configure snmp add community readonly <community_string>
 ```
+
+## SNTP
+```html
+configure sntp-client primary <IP-server-sntp> vr VR-Default
+configure sntp-client secondary <IP-server-sntp> vr VR-Default
+enable sntp-client
+```
+
 ## Radius && default user && syslog
 ```html
 configure radius mgmt-access primary server <ip_address_radius> 1812 client-ip <ip_address_lo0_switch> vr VR-Default
@@ -68,6 +79,7 @@ configure log target syslog <ip_address_syslog>:1515 vr VR-Default local0 filter
 configure log target syslog <ip_address_syslog>:1515 vr VR-Default local0 match Any
 configure log target syslog <ip_address_syslog>:1515 vr VR-Default local0 format timestamp seconds date Mmm-dd event-name none priority tag-name
 ```
+
 ## OSPF && MPLS
 ```html
 configure ospf routerid <ip_address_vlan_loopback>
@@ -78,7 +90,9 @@ configure ospf add vlan <loopback> area 0.0.0.0 link-type point-to-point passive
 enable mpls
 enable mpls protocol ldp
 enable mpls protocol rsvp-te
+configure mpls lsr-id <IP_lo0.0>
 
+        
 configure mpls add vlan <vlan_name>
 enable mpls vlan <vlan_name>
 enable mpls rsvp-te vlan <vlan_name>
@@ -101,6 +115,90 @@ disable l2vpn vpls <vpls_name>                                                  
 delete l2vpn vpls <vpls_name>                                                                                           ### delete l2vpn
 ```
 
+## Policy
+```html
+edit policy <policy-name>
+```
+```html
+Для начала редактирования нужно нажать клавишу «i».
+Команды, используемы для редактирования ACL:
+dd — To delete the current line
+yy — To copy the current line
+p — To paste the line copied
+:w — To write (save) the file
+:q — To quit the file if no changes were made
+:q! — To forcefully quit the file without saving changes
+:wq — To write and quit the file
+```
+```html
+check policy <policy-name>
+refresh policy <policy-name>
+show policy {<policy-name> | detail}
+```
+
+> Example:
+```html
+# show policy "snmp_restrict" 
+Policies at Policy Server:
+Policy: snmp_restrict
+entry AllowTheseSubnets { 
+if match any { 
+    source-address 10.10.105.0 /24 ;
+    source-address 10.10.3.0 /24 ;
+}
+then {
+    permit  ;
+}
+}
+Number of clients bound to policy: 1
+Client: snmpMaster bound once
+```
+```html
+# show policy "snmp_restrict" 
+Policies at Policy Server:
+Policy: snmp_restrict
+entry AllowTheseSubnets { 
+if match all { 
+    source-address 10.10.105.0 /24 ;
+}
+then {
+    permit  ;
+}   
+}
+Number of clients bound to policy: 1
+Client: snmpMaster bound once
+```
+```html
+configure snmp access-profile snmp_restrict readonly
+```
+
+# Unconfigure OSPF, MPLS
+```html
+ # show configuration | include <VLAN>
+create vlan "<VLAN>"
+configure vlan <VLAN> tag <VLANID>
+configure vlan <VLAN> ipaddress <IP> <NETMASK>
+enable ipforwarding vlan <VLAN>
+configure ip-mtu 1600 vlan <VLAN>
+configure mpls add vlan "<VLAN>"
+enable mpls vlan "<VLAN>"
+enable mpls rsvp-te vlan "<VLAN>"
+enable mpls ldp vlan "<VLAN>"
+configure ospf add vlan <VLAN> area 0.0.0.0 
+```
+
+```html
+configure ospf delete vlan "<VLAN>"
+configure mpls delete vlan "<VLAN>"
+delete vlan <VLAN>
+```
+
+## Reboot
+```html
+reboot time 10 27 2025 13 35 00 
+
+reboot cancel
+```
 # Troubleshooting
 ```html
 show configuration
