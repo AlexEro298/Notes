@@ -117,7 +117,7 @@ delete l2vpn vpls <vpls_name>                                                   
 
 ## Policy
 ```html
-edit policy <policy-name>
+edit policy <policy-name>                                                                                               ### также создаст файл если его нет
 ```
 ```html
 Для начала редактирования нужно нажать клавишу «i».
@@ -170,6 +170,31 @@ Client: snmpMaster bound once
 ```
 ```html
 configure snmp access-profile snmp_restrict readonly
+```
+
+> example create:
+```html
+x670# edit policy snmp_restrict
+
+egrep: snmp_restrict.pol: No such file or directory
+Entry AllowTheseSubnets {
+if match any {
+   source-address 10.10.105.0 /24;
+   source-address 10.10.3.0 /24;
+}
+then
+{
+   permit;
+}
+
+:w
+:q
+
+
+x670# check policy snmp_restrict
+Policy file check successful.
+
+
 ```
 
 # Unconfigure OSPF, MPLS
