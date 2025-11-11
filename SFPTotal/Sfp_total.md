@@ -27,3 +27,6 @@ https://sfptotal.ru/
 ![SFPTotal_page_4.jpg](image/SFPTotal_page_4.jpg)
 ![SFPTotal_page_5.jpg](image/SFPTotal_page_5.jpg)
 ![SFPTotal_page_6.jpg](image/SFPTotal_page_6.jpg)
+
+# Memory structure of the transceiver
+[SFPTotal_memory_structure_of_the_transceiver.pdf](pdf/SFPTotal_memory_structure_of_the_transceiver.pdf)
