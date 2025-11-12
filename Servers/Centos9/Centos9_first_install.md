@@ -12,13 +12,13 @@ nano /etc/security/pwquality.conf
 minlen = 5
 ```
 ## Network:
-## Centos 9:
+### Centos 9:
 ```html
 nmtui
 nmcli networking off && nmcli networking on                                                                             ### restart Network Adapter
 systemctl restart NetworkManager
 ```
-## OFF IPv6
+### OFF IPv6
 ```html
 nano /etc/sysctl.conf
 net.ipv6.conf.all.disable_ipv6 = 1
@@ -59,8 +59,10 @@ dnf install https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.
 
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute git lsb_release whois -y
 ```
-> add NTP server (chrony)
-### Proxy
+## NTP
+> add NTP server ([chrony_ntp.md](chrony_ntp.md))
+
+## Proxy
 ```html
 Proxy use, edit file: /etc/yum.conf
 

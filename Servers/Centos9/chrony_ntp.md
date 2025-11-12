@@ -1,4 +1,4 @@
-# TimeZone
+# NTP and TimeZone
 ## Change time format Centos (AM;PM -> 00:00-24:00)
 ```html
 nano /etc/locale.conf                                                                                                   ### add LC_TIME
@@ -7,7 +7,7 @@ LANG="en_US.UTF-8"
 LC_TIME=en_GB
 ```
 
-# Chrony (Centos 9):
+## NTP - Chrony (Centos 9):
 ```html
 dnf install chrony -y
 systemctl enable chronyd --now                                                                                          ### Auto-start services
@@ -23,6 +23,11 @@ allow 10.0.0.0/8
 allow 172.16.0.0/12
 
 systemctl restart chronyd
+```
+> Example:
+```html
+server 10.10.13.245 iburst
+server 10.10.13.249 iburst
 ```
 # Troubleshooting:
 ```html
