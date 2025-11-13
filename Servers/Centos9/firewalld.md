@@ -27,11 +27,24 @@ firewall-cmd --permanent --add-service=ntp
 
 firewall-cmd --reload
 ```
+## New CentOS installation
 ```html
 firewall-cmd --get-active-zones
 firewall-cmd --list-all --zone=home
+```
+````html
+firewall-cmd --permanent --remove-service=cockpit --zone=public
+firewall-cmd --permanent --remove-service=cockpit --zone=home
+````
+```html
 firewall-cmd --permanent --zone=public --remove-interface=ens18
 firewall-cmd --permanent --zone=home --add-interface=ens18
+firewall-cmd --reload
+```
+```html
+firewall-cmd --permanent --remove-service=ssh --zone=public
+firewall-cmd --permanent --remove-service=dhcpv6-client --zone=public
+firewall-cmd --permanent --remove-service=samba-client --zone=home
 firewall-cmd --reload
 ```
 # Troubleshooting:
