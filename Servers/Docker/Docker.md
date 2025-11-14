@@ -20,21 +20,13 @@ dnf remove <package_name>
 ```
 > Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. 
 > Afterward, you can install and update Docker from the repository.
-```commandline
-sudo dnf -y install dnf-plugins-core
-sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-dnf remove <package_name>
-```
-```doctest
+```bash
 test
 # sudo dnf -y install dnf-plugins-core
 $ sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-dnf remove <package_name> 
->>> print(5)
-...
->>> print(100)...
+dnf remove <package_name>
 ```
-```dtd
+```shell
 test
 # sudo dnf -y install dnf-plugins-core
 $ sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
