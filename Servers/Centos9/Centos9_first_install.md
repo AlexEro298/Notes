@@ -41,17 +41,26 @@ systemctl reload sshd.service
 ```
 ## dnf - packet manager
 ```html
-dnf upgrade -y                                                                                                          ### Update Repo and Upgrade system
+dnf upgrade -y
 
 dnf makecache
+dnf clean all
+
 dnf check-upgrade
+
+dnf install <package_name>
+dnf reinstall <package_name>
+dnf remove <package_name>  
+
 dnf upgrade <package_name>
-dnf search <tools_name>                                                                                                 ### Searching for packages in repositories
-dnf install <tools_name>                                                                                                ### installing packages from repositories
-dnf remove <tools_name>                                                                                                 ### Removing packages from system
+dnf search <package_name>                                                                                                
+                                                                                               
 dnf repolist 
-dnf list installed                                                                                                      ### List install packet
-dnf repoinfo <name_repo>                                                                                                ### Info repo
+dnf list installed       
+
+dnf repoinfo <name_repo>
+dnf config-manager --set-disabled <name_repo>
+dnf config-manager --set-enabled <name_repo>
 ```
 ```html
 sudo dnf config-manager --set-enabled crb
