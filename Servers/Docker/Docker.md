@@ -29,7 +29,10 @@ dnf remove <package_name>
 test
 # sudo dnf -y install dnf-plugins-core
 $ sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-dnf remove <package_name> print(5)
+dnf remove <package_name> 
+>>> print(5)
+...
+>>> print(100)...
 ```
 ```dtd
 test
