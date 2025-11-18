@@ -47,20 +47,6 @@ kafka:
 workers: 4 -> 8
 receive-buffer: 212992 -> 10485760
 ```
-> add use-src-addr-for-exporter-addr: true
-```bash
-flow:
-  inputs:
-    # NetFlow port
-    - type: udp
-      decoder: netflow
-      listen: :2055
-      workers: 8
-      use-src-addr-for-exporter-addr: true
-      # Before increasing this value, look for it in the troubleshooting section
-      # of the documentation.
-      receive-buffer: 10485760
-```
 
 ### Edit outlet.yaml
 
@@ -71,9 +57,9 @@ metadata:
     - type: snmp
       credentials:
         ::/0:
-          communities: 335321 -> new ***
+          communities: public -> new ***
 ```
-> increase
+> increase receive-buffer 
 ```bash
 routing:
   provider:
@@ -98,8 +84,6 @@ database:
       content: >-
         SrcAS = AS15169
 ```
-
-
 
 ## Trouble install:
 
