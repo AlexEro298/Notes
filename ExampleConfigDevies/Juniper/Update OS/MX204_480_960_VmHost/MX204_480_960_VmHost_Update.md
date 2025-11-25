@@ -195,7 +195,3 @@ VMHost Core: vmhost-core-x86-64-23.4R2-S5.6
 kernel: 5.2.60-rt15-LTS19
 Junos Disk: junos-install-mx-x86-64-23.4R2-S5.6
 ```
-# QFX
-```html
->request system software add /var/tmp/jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz
-```
