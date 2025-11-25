@@ -1,4 +1,5 @@
-# JunOS usb install
+# JunOS USB Install
+
 ```html
 1. USB flash formatted as FAT-32.
 2. Download Junos. Example: junos-vmhost-install-usb-mx-x86-64-22.4R3.25.img 
@@ -14,12 +15,20 @@
 9. After the reboot has completed, log in and verify that the new version of the software has been properly installed.
 ```
 **user@host> show version**
+
 # JunOS update:
+
+> First, find out the current OS, delete unnecessary files, and take a snapshot of the system's working status.
+
 ```html
 show version
 request system storage cleanup
+show vmhost snapshot 
 request vmhost snapshot
 ```
+
+> Next, copy the update image to /var/tmp/ (on VmHost RE it is junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz) and compare MD5 (example QFX)
+
 ```html
 Copy junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz to juniper: /var/tmp/
 
@@ -47,27 +56,49 @@ exit
 
 user@host> 
 ```
+
+> Next, we update JunOS and reboot the router.
+
 ```html
 request vmhost software no-validate /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost software add /var/tmp/***-21.4R3-S5.4.tgz
 request vmhost reboot
 ```
-# Dual RE
+
+> After the reboot, we check the version and performance.
+```html
+show version
+request system storage cleanup
+request system snapshot
+```
+
+# Dual RE update step
+
+> Upload junos-vmhost-install-*.img to re0/re1 and DISABLE GRES/NSR/NSB
+
 ![Manual Upgrade DUAL RE](pictures/manual.png)
 ![Copy JunOS packet RE0 to RE1](pictures/file_cp_re1.png)
 ![Disable GRES/NSB/NSR](pictures/disable_GRES_NSR_NSB.png)
-**Upload junos-vmhost-install-\* to re0 and DISABLE GRES**
+
+> Copy img from re0/re1 to re1/re0
+
 ```html
 >file ls re0:/var/tmp/junos*
 >file ls re1:/var/tmp/junos*
 
 >file cp re0:/var/tmp/junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz re1:/var/tmp/
 ```
+
+> Log in to the RE backup and update it
+
 ```html
 >request routing-engine login re1 - re1 backup RE
 >show chassis hardware - not show the output to backup RE
 >request vmhost software add /var/tmp/... no-validate re1 reboot | no-more
 ```
+
+> After the RE is updated and rebooted, we change the RE master (at this time, the FPC will reboot, loss of traffic)
+
 ![Switchover RE](pictures/master_switch.png)
 ```html
 >request chassis routing-engine master switch check no-confirm
@@ -76,12 +107,16 @@ Standby Routing Engine is not ready for graceful switchover.
 
 >request chassis routing-engine master switch no-confirm
 ```
-**Login on RE0**
+
+> Log in to the new RE backup and update it
+
 ```html
 request routing-engine login re0 - login re0 new backup RE
 request vmhost software add /var/tmp/... no-validate re0 reboot | no-more
 ```
-**Enable GRES**
+
+> Enable GRES/NSR/NSB
+
 ```html
 set system commit synchronize
 set chassis redundancy routing-engine 0 master
@@ -90,6 +125,9 @@ set chassis redundancy graceful-switchover
 set routing-options nonstop-routing
 set protocols layer2-control nonstop-bridging
 ```
+
+> Checking GRES/NSR/NSB
+
 ```html
 > show task replication    
         Stateful Replication: Enabled
@@ -102,6 +140,9 @@ set protocols layer2-control nonstop-bridging
     RSVP                    Complete              
     LDP                     Complete
 ```
+
+> we switch the RE master back (If everything is synchronized, then the FPCs do not reboot, there is no loss of traffic)
+
 ```html
 >request chassis routing-engine master switch check no-confirm
 Switchover Ready
@@ -109,10 +150,15 @@ Switchover Ready
 
 >request chassis routing-engine master switch no-confirm
 ```
-![Delete old JunOS packet](pictures/rm_files.png)
+# Deleting old packages in /var/tmp/
+
 ```html
+file ls re0:/var/tmp/junos-vmhost-install*
 file rm re0:/var/tmp/junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz
 ```
+
+# Create snapshot
+
 ```html
 >request vmhost snapshot
 
