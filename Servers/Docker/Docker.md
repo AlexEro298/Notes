@@ -109,7 +109,7 @@ docker compose down -v --- Full stop with data deletion
 docker compose ps --- Viewing the status
 docker compose logs -f --- Viewing logs in RealTime (-f)
 docker compose logs akvorado-console --- example log a specific service
-
+docker compose pull --- example update Docker images specified in your docker-compose file.yml
 
 docker system df
 

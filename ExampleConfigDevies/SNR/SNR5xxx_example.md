@@ -1,4 +1,5 @@
 # SNR example config default:
+
 ```html
 SNR-S5210G-8TX-DC(config)#show run
 !
@@ -68,7 +69,9 @@ line vty 0 39
 !
 end
 ```
+
 # Example config LAG
+
 > create LACP channel-group
 ```html
 SNR-S5210G-8TX-DC(config)#show run int xe4
@@ -124,7 +127,20 @@ SNR-S5210G-8TX-DC(config-if)#lacp timeout ?
   short  Set LACP short timeout
 ```
 
+## Example delete ports in LAG:
+
+```html
+SNR-TEST(config)#interface xe3
+SNR-TEST(config-if)#no channel-group 
+```
+> When the last port is deleted from the LAG, 
+> the Port-Channel configuration is deleted from the configuration.
+
+> When removing a port from LAG, 
+> its configuration will be the same as LAG (it is best to shutdown the port and remove it from LAG)
+
 ## Troubleshooting LAG
+
 ```html
 show etherchannel
 show etherchannel 1
@@ -156,6 +172,7 @@ xe4         0       0       0       0       0       0       0       0
 ```
 
 # Troubleshooting:
+
 ```html
 show running-config
 show transceiver

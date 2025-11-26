@@ -71,7 +71,7 @@ SNR-2995G-12FX(config)#port-group 1
 SNR-2995G-12FX(config)#interface ethernet 1/0/16
 SNR-2995G-12FX(config-if-ethernet1/0/16)#port-group 1 mode active 
 ```
->
+
 ```html
 SNR-2995G-12FX(config)#
 
@@ -145,7 +145,7 @@ no lacp timeout
 ```
 > Default:  long
 
-## Notest
+## Notes
 
 ### The created Port Channel inherits the port configuration.
 
@@ -267,7 +267,9 @@ Interface Port-Channel1
  switchport trunk allowed vlan 705 
 !
 ```
+
 ### Example fast create LAG:
+
 ```html
 SNR-S2995G-12FX(config)#port-group 1
 SNR-S2995G-12FX(config)#interface ethernet 1/0/15-16    
@@ -275,7 +277,9 @@ SNR-S2995G-12FX(config-if-port-range)#port-group 1 mode active
 SNR-S2995G-12FX(config-if-port-range)#interface port-channel 1
 SNR-S2995G-12FX(config-if-port-channel1)#
 ```
+
 ### Troubleshooting LAG:
+
 ```html
 show port-group 1 detail
 ```
