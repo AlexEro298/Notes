@@ -57,6 +57,16 @@ file ls re0:/var/tmp/junos-vmhost-install*
 file rm re0:/var/tmp/junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz
 ```
 
+# Rollback JunOS
+
+```html
+show version
+
+show system software rollback
+
+request system software rollback
+```
+
 # QFX5120Y-48Y-8C example update
 
 ```html
