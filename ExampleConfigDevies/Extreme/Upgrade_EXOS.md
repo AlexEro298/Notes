@@ -64,6 +64,7 @@ Switch secondary Wed Jan 30 17:44:06 UTC 2013 15.2.1.5 summitX-15.2.1.5-ssh.xmod
 x670 # download image 10.10.105.200 summitX-16.2.5.4-patch1-31.xos vr "VR-Default" secondary
 yes
 ```
+> Example:
 ```html
 x670.14 # download image 10.10.105.200 summitX-16.2.5.4-patch1-31.xos vr "VR-Default" secondary 
 Do you want to install image after downloading? (y - yes, n - no, <cr> - cancel) Yes
@@ -75,6 +76,22 @@ Installing to Switch............................................................
 Image installed successfully
 This image will be used only after rebooting the switch!
 x670.15 # 
+```
+> Example:
+```html
+x670.20 # download image 10.10.105.200 summitX-16.2.5.4-patch1-31.xos vr "VR-Default" primary 
+Debug information files are present in internal-memory.
+These files will be removed if you continue with download.
+Do you want to continue with download and remove existing files from internal-memory? (y/N) Yes
+Do you want to install image after downloading? (y - yes, n - no, <cr> - cancel) Yes
+
+Downloading to Switch..................................................................................................................................................................
+Installing to primary partition!
+
+Installing to Switch.............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+Image installed successfully
+This image will be used only after rebooting the switch!
+x670.21 #
 ```
 > check info
 ```html
