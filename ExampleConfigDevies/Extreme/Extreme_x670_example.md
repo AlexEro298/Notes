@@ -362,6 +362,7 @@ configure snmp access-profile snmp_restrict readonly
 x670# edit policy snmp_restrict
 
 egrep: snmp_restrict.pol: No such file or directory
+
 Entry AllowTheseSubnets {
 if match any {
    source-address 10.10.105.0 /24;
@@ -370,6 +371,7 @@ if match any {
 then
 {
    permit;
+}
 }
 
 :w
@@ -405,7 +407,7 @@ delete vlan <VLAN>
 
 ## Reboot
 ```html
-reboot time 10 27 2025 13 35 00 
+reboot time 10 27 2025 13 35 00                             # reboot 27.10.2025 13:35:00
 
 reboot cancel
 ```

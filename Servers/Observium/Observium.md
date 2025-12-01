@@ -20,3 +20,11 @@ nano /etc/cron.d/observium
 # Run housekeeping script daily for rrds, ports, orphaned entries in the database and performance data
 #47 4      * * * root /opt/observium/housekeeping.php -yrptb >> /dev/null 2>&1
 ```
+
+## Rename Device Observium
+
+```html
+cd /opt/observium/
+
+php rename_device.php <old_device_name> <new_device_name>
+```
