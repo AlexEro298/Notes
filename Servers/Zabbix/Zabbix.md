@@ -1,10 +1,15 @@
 # Zabbix CentOS 9
+
+> https://www.zabbix.com/download?zabbix=7.0&os_distribution=centos&os_version=9&components=agent&db=&ws=
+
 ```html
 systemctl status zabbix-server                                                                                          ### status server
 systemctl start zabbix-server                                                                                           ### stop server
 systemctl stop zabbix-server                                                                                            ### start server
 ```
+
 ## Install 7.0 Zabbix Agent
+
 > nano /etc/yum.repos.d/epel.repo
 ```html
 [epel]
@@ -17,7 +22,9 @@ dnf clean all
 dnf install zabbix-agent -y
 systemctl enable zabbix-agent
 ```
+
 ## Zabbix Agent config
+
 > /etc/zabbix/zabbix_agentd.conf 
 ```html
 Server=127.0.0.1,10.10.13.0/24                                                                                          ### example
@@ -34,7 +41,9 @@ firewall-cmd --reload
 systemctl restart zabbix-agent
 systemctl enable zabbix-agent
 ```
+
 ## Upgrade between minor versions
+
 ```html
 It is possible to upgrade between Zabbix 7.0.x minor versions (for example, from 7.0.1 to 7.0.3).
 
@@ -47,6 +56,7 @@ To upgrade Zabbix agent 2 only, replace 'zabbix-*' with 'zabbix-agent2-*' in the
 ```
 
 # Troubleshooting:
+
 ```html
 /var/log/zabbix/                                                                                                        ### logs file
 /etc/zabbix/                                                                                                            ### config file

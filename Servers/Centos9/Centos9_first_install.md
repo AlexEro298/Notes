@@ -69,7 +69,16 @@ dnf install https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.
 dnf install mc net-tools htop nmap mtr bgpq4 traceroute git lsb_release whois -y
 ```
 ## NTP
+
 > add NTP server ([chrony_ntp.md](chrony_ntp.md))
+
+## Firewalld
+
+> setting [firewalld.md](firewalld.md)
+
+## Zabbix
+
+> add zabbix [Zabbix.md](../Zabbix/Zabbix.md)
 
 ## Proxy
 ```html
