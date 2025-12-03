@@ -66,3 +66,19 @@ mv EXOS-VM_v30.2.1.8.qcow2 hda.qcow2
 
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
+
+# Troubleshooting
+```html
+If error:
+PHP Warning:  file_get_contents(/opt/unetlab/platform): Failed to open stream: No such file or directory in /opt/unetlab/html/includes/init.php on line 71
+
+dmesg | grep -i cpu | grep -i -e intel -e amd
+
+if Intel:
+echo "intel" > /opt/unetlab/platform
+
+or AMD:
+echo "amd" > /opt/unetlab/platform
+
+/opt/unetlab/wrappers/unl_wrapper -a fixpermissions
+```
