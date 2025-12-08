@@ -400,8 +400,8 @@ configure ospf add vlan <VLAN> area 0.0.0.0
 ```
 
 ```html
-configure ospf delete vlan "<VLAN>"
 configure mpls delete vlan "<VLAN>"
+configure ospf delete vlan "<VLAN>"
 delete vlan <VLAN>
 ```
 
