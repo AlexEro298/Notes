@@ -1,5 +1,7 @@
 # JunOS update:
 
+> Package QFX5 for 5100, QFX5e for 5110 and 5120 
+
 > First, find out the current OS, delete unnecessary files.
 
 ```html
@@ -59,18 +61,53 @@ file rm re0:/var/tmp/junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz
 
 # Rollback JunOS
 
+> 4 step:
+> 1. show version
+> 2. show system software rollback
+> 3. request system software rollback
+> 4. request system reboot
+
 ```html
-show version
+{master:0}
+alexero@qfx5120-48y-8c-test-1> show version 
+localre:
+--------------------------------------------------------------------------
+Hostname: qfx5120-48y-8c-test-1
+Model: qfx5120-48y-8c
+Junos: 23.4R2-S4.11 flex
+...
+```
+```html
+{master:0}
+alexero@qfx5120-48y-8c-test-1> show system software rollback 
+localre:
+--------------------------------------------------------------------------
+Image: qfx-5e-flex-22.2R2-S1.5.202311221700 available for rollback.
+```
+```html
+{master:0}
+alexero@qfx5120-48y-8c-test-1> request system software rollback    
+localre:
+--------------------------------------------------------------------------
+Initiating rollback on the Host.
+Rolling back to qfx-5e-flex-22.2R2-S1.5.202311221700 image
 
-show system software rollback
-
-request system software rollback
+Rollback staged to image qfx-5e-flex-22.2R2-S1.5.202311221700.
+Reboot the system to complete installation!
+```
+> reboot about 8-10 minutes (rescue config and current config are saved and not changed during rollback software)
+```html
+{master:0}
+alexero@qfx5120-48y-8c-test-1> request system reboot
 ```
 
-# QFX5120Y-48Y-8C example update
+# QFX5120Y-48Y-8C example update version
 
 ```html
 jinstall-host-qfx-5e-flex-x86-64-19.1R3-S2.3-secure-signed.tgz ->
 jinstall-host-qfx-5e-flex-x86-64-21.4R3-S10.13-secure-signed.tgz ->
 jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz
+```
+```html
+qfx-5e-flex-22.2R2-S1.5.202311221700 -> jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz
 ```
