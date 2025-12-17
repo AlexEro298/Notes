@@ -20,7 +20,9 @@ show version
 request system storage cleanup
 request system snapshot
 ```
+
 > Next, copy the update image to /var/tmp/ (on MX5,40,80,104 it is jinstall-ppc-21.2R3-S9.21-signed.tgz) and compare MD5 (example QFX)
+
 ```html
 Copy junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz to juniper: /var/tmp/
 
@@ -48,12 +50,16 @@ exit
 
 user@host> 
 ```
+
 > Next, we update JunOS and reboot the router.
+
 ```html
 request system software add /var/tmp/***-21.4R3-S5.4.tgz (optional no-validate reboot)
 request system reboot
 ```
+
 > After the reboot, we check the version and performance.
+
 ```html
 show version
 request system storage cleanup
