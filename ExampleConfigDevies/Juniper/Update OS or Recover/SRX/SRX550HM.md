@@ -185,3 +185,45 @@ Junos: 15.1X49-D170.4
 JUNOS Software Release [15.1X49-D170.4]
 KERNEL 15.1X49-D170.4 #0 built by builder on 2019-02-22 22:34:42 UTC
 ```
+```html
+alexero@srx550.test> show system software 
+Information for junos:
+
+Comment:
+JUNOS Software Release [19.4R3-S4.1]
+
+> show version detail 
+Hostname: srx550.test
+Model: srx550m
+Junos: 19.4R3-S4.1
+JUNOS Software Release [19.4R3-S4.1]
+KERNEL 19.4R3-S4.1 #0 built by builder on 2021-06-03 16:27:29 UTC
+```
+```html
+alexero@srx550.test> show system software 
+Information for junos:
+
+Comment:
+JUNOS Software Release [20.4R2-S2.2]
+
+alexero@srx550.test> show version detail 
+Hostname: srx550.test
+Model: srx550m
+Junos: 20.4R2-S2.2
+JUNOS Software Release [20.4R2-S2.2]
+KERNEL 20.4R2-S2.2 #0 built by builder on 2021-08-11 21:59:06 UTC
+```
+```html
+alexero@srx550.test> show system software 
+Information for junos:
+
+Comment:
+JUNOS Software Release [21.4R3-S7.9]
+
+alexero@srx550.test> show version detail 
+Hostname: srx550.test
+Model: srx550m
+Junos: 21.4R3-S7.9
+JUNOS Software Release [21.4R3-S7.9]
+KERNEL 21.4R3-S7.9 #0 built by builder on 2024-06-29 20:42:22 UTC
+```
