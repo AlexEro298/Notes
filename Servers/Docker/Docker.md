@@ -34,7 +34,7 @@ dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 > This command installs Docker, but it doesn't start Docker. 
 > It also creates a docker group, however, it doesn't add any users to the group by default.
 ```bash
-dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 2. Start Docker Engine
 ```bash
