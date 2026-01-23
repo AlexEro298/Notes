@@ -72,6 +72,8 @@ mv EXOS-VM_v30.2.1.8.qcow2 hda.qcow2
 1. Install client pack
 2. Edit path SecureCrt in  C:\Program Files\EVE-NG\win10_64bit_sCRT (C:\Program Files\VanDyke Software\Clients\SecureCRT.exe) and use file
 3. Edit windows default applications (telnet) SecureCrt
+
+4. wireshark_wrapper (edit auth date)
 ```
 
 # Troubleshooting
