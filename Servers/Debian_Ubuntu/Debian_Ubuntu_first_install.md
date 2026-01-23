@@ -3,6 +3,7 @@
 ```html
 useradd -m <username>
 passwd <username>
+usermod -aG sudo <username>
 ```
 ```html
 deluser --remove-all-files <username>
@@ -44,11 +45,7 @@ mkdir -p .ssh && cd .ssh && echo "<your_public-key>" > authorized_keys && chown 
             
 nano /etc/ssh/sshd_config
 PasswordAuthentication no
-    
-systemctl reload sshd.service
-``` 
-OS Ubuntu then again:
-```html
+
 /etc/ssh/sshd_config.d/50-cloud-init.conf
 PasswordAuthentication no
     
@@ -69,7 +66,7 @@ apt repoinfo <name_repo>                                                        
 ```html
 add-apt-repository ppa:deadsnakes/ppa -y
 apt update
-apt install mc iputils-ping nano net-tools htop nmap mtr bgpq4 traceroute git -y
+apt install mc nano net-tools htop nmap mtr bgpq4 traceroute git whois -y
 ```
 ### Proxy
 ```html
