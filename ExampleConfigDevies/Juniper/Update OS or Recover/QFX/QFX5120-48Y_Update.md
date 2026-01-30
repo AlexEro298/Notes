@@ -106,7 +106,8 @@ alexero@qfx5120-48y-8c-test-1> request system reboot
 ```html
 jinstall-host-qfx-5e-flex-x86-64-19.1R3-S2.3-secure-signed.tgz ->
 jinstall-host-qfx-5e-flex-x86-64-21.4R3-S10.13-secure-signed.tgz ->
-jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz
+jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz ->
+jinstall-host-qfx-5e-flex-x86-64-23.4R2-S6.10-secure-signed.tgz
 ```
 ```html
 qfx-5e-flex-22.2R2-S1.5.202311221700 -> jinstall-host-qfx-5e-flex-x86-64-23.4R2-S4.11-secure-signed.tgz

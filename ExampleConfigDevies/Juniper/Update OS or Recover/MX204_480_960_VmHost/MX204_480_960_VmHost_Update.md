@@ -89,6 +89,13 @@ request system snapshot
 >file cp re0:/var/tmp/junos-vmhost-install-mx-x86-64-21.4R3-S5.4.tgz re1:/var/tmp/
 ```
 
+> Disable GRES/NSR/NSB
+```html
+delete chassis redundancy
+delete routing-options nonstop-routing
+delete protocols layer2-control
+```
+
 > Log in to the RE backup and update it
 
 ```html
@@ -112,6 +119,7 @@ Standby Routing Engine is not ready for graceful switchover.
 
 ```html
 request routing-engine login re0 - login re0 new backup RE
+show chassis hardware - not show the output to backup RE
 request vmhost software add /var/tmp/... no-validate re0 reboot | no-more
 ```
 
