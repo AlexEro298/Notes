@@ -50,7 +50,7 @@ mv /opt/observium_old/config.php observium/
 ```html
 /opt/observium/discovery.php -h all
 ```
-> Re-enable observium cronjobs optional
+> Re-enable observium cronjobs (optional)
 > You may now delete your observium_old directory if everything has updated correctly:
 ```html
 rm -rf observium_old
