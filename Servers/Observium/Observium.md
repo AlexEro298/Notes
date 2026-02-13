@@ -29,6 +29,15 @@ cd /opt/observium/
 php rename_device.php <old_device_name> <new_device_name>
 ```
 
+## Discovery Device
+
+```html
+>  /opt/observium/discovery.php
+```
+
+![discovery_php.png](pictures/discovery_php.png)
+
+
 ## Update
 > Disable observium cronjobs (optional)
 
