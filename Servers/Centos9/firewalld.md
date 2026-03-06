@@ -14,6 +14,7 @@ firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --new-zone=<custom_zone>
 firewall-cmd --permanent --remove-port=80/tcp
 ```
+
 ```html
 firewall-cmd --list-all
 firewall-cmd --permanent --add-port=80/tcp
@@ -26,6 +27,17 @@ firewall-cmd --permanent --add-service=zabbix
 firewall-cmd --permanent --add-service=ntp
 
 firewall-cmd --reload
+```
+
+```html
+# Заблокировать сеть 10.0.0.0/8
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="10.0.0.0/8" drop'
+
+# Заблокировать сеть 172.16.0.0/12
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="172.16.0.0/12" drop'
+
+# Заблокировать сеть 192.168.0.0/16
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.0.0/16" drop'
 ```
 ## New CentOS installation
 ```html
