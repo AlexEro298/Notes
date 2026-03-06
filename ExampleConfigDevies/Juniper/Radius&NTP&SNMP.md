@@ -1,6 +1,8 @@
 # Config Juniper:
+
 **First add user radius and +attribute juniper local name (example name: remote).  
 Tho steeps adding user remote in Juniper**
+
 ```html
 system {
     ntp {
@@ -28,6 +30,9 @@ set system radius-server <ip_address_radius_server> secret "***"
 set system radius-server <ip_address_radius_server> source-address <ip_address_lo0.0>
 set snmp community <community> authorization read-only
 set snmp community <community> clients <ip_network>/<mask>
+
+set system authentication-order radius
+set system authentication-order password
 ```
 # Troubleshooting
 ```html
