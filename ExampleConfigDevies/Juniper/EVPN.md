@@ -346,7 +346,7 @@ evpn_vlan104.evpn.0: 40 destinations, 40 routes (40 active, 0 holddown, 0 hidden
 
 These are exotic options where the entire physical port is treated as a single service. Not supported by all vendors.
 
-## VRF example
+# VRF example
 
 * Add irb.104 to VRF (and irb.104 EVPN)
 ```html
@@ -367,7 +367,7 @@ test_vrf {
 }
 ```
 
-## Troubleshooting
+# Troubleshooting
 
 ```html
 > show evpn database
