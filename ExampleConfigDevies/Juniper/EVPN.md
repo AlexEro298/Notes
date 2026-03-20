@@ -2,8 +2,8 @@
 
 ## Type Route
 
-* Type 1 - Ethernet Auto-Discovery (A-D) Route [It is used for multihoming mechanisms (altering, mass recall of routes, split-horizon)]
-* Type 2 - MAC/IP Advertisement Route [Announces MAC addresses and optionally associated IP addresses.]
+* Type 1 (bgp.evpn.0; <instance-name>.evpn.0;) - Ethernet Auto-Discovery (A-D) Route [It is used for multihoming mechanisms (altering, mass recall of routes, split-horizon)]
+* Type 2 (bgp.evpn.0; <instance-name>.evpn.0;) - MAC/IP Advertisement Route [Announces MAC addresses and optionally associated IP addresses.]
 ```html
 2:10.240.1.3:400::104::88:30:37:39:73:a0/304 MAC/IP        
                    *[EVPN/170] 00:06:05
@@ -20,7 +20,7 @@
                       AS path: I, validation-state: unverified
                     >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
 ```
-* Type 3 - Inclusive Multicast Ethernet Tag Route [It is used to automatically detect all PE in the domain and organize the delivery of BUM traffic (Broadcast, Unknown unicast, Multicast)]
+* Type 3 (bgp.evpn.0; <instance-name>.evpn.0;) - Inclusive Multicast Ethernet Tag Route [It is used to automatically detect all PE in the domain and organize the delivery of BUM traffic (Broadcast, Unknown unicast, Multicast)]
 ```html
 3:10.240.1.3:400::104::10.240.1.3/248 IM            
                    *[EVPN/170] 17:19:37
@@ -30,8 +30,8 @@
                       AS path: I, validation-state: unverified
                     >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
 ```
-* Type 4 - Ethernet Segment Route [Allows PE to discover each other within the same Ethernet (ES) segment]
-* Type 5 - IP Prefix Route [Announces IP prefixes (networks), used to build L3VPN on top of EVPN]
+* Type 4 (bgp.evpn.0; \_\_default_evpn\_\_.evpn.0;) - Ethernet Segment Route [Allows PE to discover each other within the same Ethernet (ES) segment]
+* Type 5 (<instance-vrf>.evpn.0)- IP Prefix Route [Announces IP prefixes (networks), used to build L3VPN on top of EVPN]
 
 ## Type EVPN Services
 
@@ -345,6 +345,176 @@ evpn_vlan104.evpn.0: 40 destinations, 40 routes (40 active, 0 holddown, 0 hidden
 ## Port-based and Port-based VLAN-aware
 
 These are exotic options where the entire physical port is treated as a single service. Not supported by all vendors.
+
+## Multihome EVPN (Active/Active)
+
+EVPN Multihoming (Active/Active) is a technology that allows you to connect a single client device (CE) to two or more ISP edge routers (PE) and use both connections simultaneously to transfer traffic. 
+This is a key mechanism for ensuring high availability and increased bandwidth in Ethernet VPN (EVPN) networks
+
+### 🔑 Key concepts
+
+* Ethernet Segment (ES) - is a group of physical links that connect your CE device to multiple PE routers. 
+For CE, all these links look like one regular Link Aggregation Group (LAG).
+
+
+* The Ethernet Segment Identifier (ESI) - is a unique 10-byte identifier that you use to "label" all links included in one Ethernet Segment. 
+This is the most important configuration element. 
+If two PE routers use the same ESI on their interfaces, they understand that they are connected to the same client and should work as a single group.
+
+
+* A Designated Forwarder (DF) - is a special "selected" PE router that is responsible for sending broadcast, unknown unicast, and multicast (BUM) traffic towards CE. 
+In Active/Active mode, this does not mean that only one PE is running. 
+Both can transmit regular unicast traffic, but only DF will send BUM traffic to prevent loops.
+
+### Setting up physical connections 
+
+![evpn_2.png](pictures/evpn_2.png)
+
+#### PE1
+
+* automatic generate ESI (based on lacp-pe-system-id-and-admin-key [system-id and admin-key])
+* system-id - example number ae*
+* admin-key - ID CE
+
+```html
+set interfaces xe-5/1/17 description CE1_xe-0/0/33
+set interfaces xe-5/1/17 gigether-options 802.3ad ae2
+
+set interfaces ae2 description CE1-ae12
+set interfaces ae2 flexible-vlan-tagging
+set interfaces ae2 mtu 9216
+set interfaces ae2 encapsulation flexible-ethernet-services
+set interfaces ae2 esi auto-derive lacp-pe-system-id-and-admin-key
+set interfaces ae2 esi all-active
+set interfaces ae2 aggregated-ether-options minimum-links 1
+set interfaces ae2 aggregated-ether-options lacp active
+set interfaces ae2 aggregated-ether-options lacp periodic fast
+set interfaces ae2 aggregated-ether-options lacp system-id 00:00:00:00:00:02
+set interfaces ae2 aggregated-ether-options lacp admin-key 1
+```
+
+#### PE2
+
+```html
+set interfaces xe-0/1/7 description CE1_xe-0/0/30
+set interfaces xe-0/1/7 gigether-options 802.3ad ae2
+
+set interfaces ae2 description CE1-ae12
+set interfaces ae2 flexible-vlan-tagging
+set interfaces ae2 mtu 9216
+set interfaces ae2 encapsulation flexible-ethernet-services
+set interfaces ae2 esi auto-derive lacp-pe-system-id-and-admin-key
+set interfaces ae2 esi all-active
+set interfaces ae2 aggregated-ether-options minimum-links 1
+set interfaces ae2 aggregated-ether-options lacp active
+set interfaces ae2 aggregated-ether-options lacp periodic fast
+set interfaces ae2 aggregated-ether-options lacp system-id 00:00:00:00:00:02
+set interfaces ae2 aggregated-ether-options lacp admin-key 1
+```
+
+#### CE1
+
+```html
+set interfaces xe-0/0/33 description PE1_xe-5/1/17
+set interfaces xe-0/0/33 ether-options 802.3ad ae12
+
+set interfaces xe-0/0/30 description PE2_xe-0/1/7
+set interfaces xe-0/0/30 ether-options 802.3ad ae12
+
+set interfaces ae12 description PE1-PE2-ae2
+set interfaces ae12 flexible-vlan-tagging
+set interfaces ae12 mtu 9216
+set interfaces ae12 encapsulation extended-vlan-bridge
+set interfaces ae12 aggregated-ether-options minimum-links 1
+set interfaces ae12 aggregated-ether-options lacp active
+set interfaces ae12 aggregated-ether-options lacp periodic fast
+```
+
+### Config Multihome EVPN
+
+#### PE1 (on PE2 change RD)
+
+```html
+set interfaces ae2 unit 104 description vlan_104
+set interfaces ae2 unit 104 encapsulation vlan-bridge
+set interfaces ae2 unit 104 vlan-id 104
+set interfaces ae2 unit 104 family bridge
+
+set routing-instances test_evpn instance-type evpn
+set routing-instances test_evpn protocols evpn encapsulation mpls
+set routing-instances test_evpn vlan-id 104
+set routing-instances test_evpn interface ae2.104
+set routing-instances test_evpn route-distinguisher 10.240.1.3:400
+set routing-instances test_evpn vrf-target target:65000:400
+```
+
+##### Example PE1:
+
+```html
+> show route table test_evpn.evpn.0 
+20.03.2026 16:05:36 +0500
+
+test_evpn.evpn.0: 5 destinations, 5 routes (5 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+1:10.240.1.3:400::01000000000002000100::0/192 AD/EVI        
+                   *[EVPN/170] 00:03:24
+                       Indirect
+1:10.240.1.6:0::01000000000002000100::FFFF:FFFF/192 AD/ESI        
+                   *[BGP/170] 00:02:07, localpref 100, from 10.240.1.6
+                      AS path: I, validation-state: unverified
+                    >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
+1:10.240.1.6:400::01000000000002000100::0/192 AD/EVI        
+                   *[BGP/170] 00:02:08, localpref 100, from 10.240.1.6
+                      AS path: I, validation-state: unverified
+                    >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
+3:10.240.1.3:400::104::10.240.1.3/248 IM            
+                   *[EVPN/170] 00:03:27
+                       Indirect
+3:10.240.1.6:400::104::10.240.1.6/248 IM            
+                   *[BGP/170] 00:02:10, localpref 100, from 10.240.1.6
+                      AS path: I, validation-state: unverified
+                    >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
+```
+
+| Route Type | Full Entry | Description |
+| :--- | :--- | :--- |
+| **Type 1 AD/EVI** | `1:10.240.1.3:400::01000000000002000100::0/192` | Local route (from PE1) announcing that for the EVPN instance (EVI) with RD 10.240.1.3:400, there is a multihomed Ethernet segment with ESI `01:00:00:00:00:00:00:02:00:01:00`. |
+| **Type 1 AD/ESI** | `1:10.240.1.6:0::01000000000002000100::FFFF:FFFF/192` | Remote route (from PE2) announcing that PE2 also has this Ethernet segment (with the same ESI). `FFFF:FFFF` is a special value meaning "all EVPN instances". |
+| **Type 1 AD/EVI** | `1:10.240.1.6:400::01000000000002000100::0/192` | Remote route (from PE2) announcing that for its EVPN instance (EVI) with RD 10.240.1.6:400, this Ethernet segment is present. |
+| **Type 3 IMET** | `3:10.240.1.3:400::104::10.240.1.3/248` and `3:10.240.1.6:400::104::10.240.1.6/248` | Classic IMET routes for BUM (Broadcast, Unknown Unicast, Multicast) traffic. |
+
+```html
+> show evpn instance test_evpn extensive | match "ESI|Designated" 
+20.03.2026 16:12:34 +0500
+    Interface name  ESI                            Mode             Status     AC-Role
+    ESI: 01:00:00:00:00:00:02:00:01:00
+      Designated forwarder: 10.240.1.3
+      Last designated forwarder update: Mar 20 16:03:32
+```
+
+```html
+> show route table __default_evpn__.evpn.0 
+20.03.2026 16:15:09 +0500
+
+__default_evpn__.evpn.0: 3 destinations, 3 routes (3 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+1:10.240.1.3:0::01000000000002000100::FFFF:FFFF/192 AD/ESI        
+                   *[EVPN/170] 00:12:55
+                       Indirect
+4:10.240.1.3:0::01000000000002000100:10.240.1.3/296 ES            
+                   *[EVPN/170] 00:12:56
+                       Indirect
+4:10.240.1.6:0::01000000000002000100:10.240.1.6/296 ES            
+                   *[BGP/170] 00:11:40, localpref 100, from 10.240.1.6
+                      AS path: I, validation-state: unverified
+                    >  to 10.1.3.37 via xe-5/1/1.335, label-switched-path PE1_to_PE2
+```
+
+
+
+
 
 # VRF example
 
